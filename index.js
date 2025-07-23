@@ -36,7 +36,7 @@ function updateTime() {
     }
   }
 
-  // dynamic cities (excluding nairobi and berlin)
+  // dynamic cities
   let dynamicCities = document.querySelectorAll(
     ".city[id]:not(#nairobi):not(#berlin)"
   );
@@ -79,57 +79,57 @@ function updateCity(event) {
     cityDiv.className = "city";
     cityDiv.id = cityId;
 
-    // 🔥 Add styling classes
-    const cityCard = document.createElement("div");
-    cityCard.className = "city-card float slide-up";
-
-    cityCard.innerHTML = `
-      <h2>${cityName}</h2>
-      <div class="date">${cityTime.format("dddd, MMMM Do YYYY")}</div>
-      <div class="temperature"></div>
-      <div class="humidity"></div>
-      <div class="wind-speed"></div>
-      <div class="weather-icon"></div>
+    // ✅ Use template literal with backticks
+    cityDiv.innerHTML = `
+      <div>
+        <h2>${cityName}</h2>
+        <div class="date">${cityTime.format("dddd, MMMM Do YYYY")}</div>
+        <div class="temperature"></div>
+        <div class="humidity"></div>
+        <div class="wind-speed"></div>
+        <div class="icon"></div>
+      </div>
       <div class="time">${cityTime.format("h:mm:ss")} <small>${cityTime.format(
       "A"
     )}</small></div>
     `;
 
-    cityDiv.appendChild(cityCard);
     citiesElement.appendChild(cityDiv);
 
     getWeather(cityName, cityId);
+  } else {
+    console.warn("Could not find the #cities element in the DOM.");
   }
 }
 
+updateTime();
+setInterval(updateTime, 1000);
+
+let citiesSelectElement = document.querySelector("#city");
+if (citiesSelectElement) {
+  citiesSelectElement.addEventListener("change", updateCity);
+}
+
 function displayWeather(cityId, response) {
+  // ✅ Fix missing string quotes in selector
   const cityElement = document.querySelector(`#${cityId}`);
   if (!cityElement) return;
 
-  const card = cityElement.querySelector(".city-card");
-  const tempEl = card.querySelector(".temperature");
-  const humidityEl = card.querySelector(".humidity");
-  const windEl = card.querySelector(".wind-speed");
-  const iconEl = card.querySelector(".weather-icon");
+  const tempEl = cityElement.querySelector(".temperature");
+  const humidityEl = cityElement.querySelector(".humidity");
+  const windEl = cityElement.querySelector(".wind-speed");
+  const iconEl = cityElement.querySelector(".icon");
 
   const temperature = Math.round(response.data.temperature.current);
   const humidity = response.data.temperature.humidity;
   const windSpeed = Math.round(response.data.wind.speed);
   const iconUrl = response.data.condition.icon_url;
-  const condition = response.data.condition.description.toLowerCase();
 
+  // ✅ Fix incorrect template literals
   if (tempEl) tempEl.textContent = `🌡️ ${temperature}°C`;
   if (humidityEl) humidityEl.textContent = `💧 ${humidity}%`;
   if (windEl) windEl.textContent = `💨 ${windSpeed} km/h`;
-  if (iconEl) {
-    iconEl.innerHTML = `<img src="${iconUrl}" alt="Weather icon" />`;
-    iconEl.classList.remove("sunny", "rainy"); // Clear previous animation class
-    if (condition.includes("sun")) {
-      iconEl.classList.add("sunny");
-    } else if (condition.includes("rain")) {
-      iconEl.classList.add("rainy");
-    }
-  }
+  if (iconEl) iconEl.innerHTML = `<img src="${iconUrl}" alt="Weather icon" />`;
 }
 
 function getWeather(cityName, cityId) {
@@ -146,15 +146,6 @@ function getWeather(cityName, cityId) {
     });
 }
 
-// Initial setup
-updateTime();
-setInterval(updateTime, 1000);
-
-let citiesSelectElement = document.querySelector("#city");
-if (citiesSelectElement) {
-  citiesSelectElement.addEventListener("change", updateCity);
-}
-
-// Load weather for static cities
+// Initial weather load
 getWeather("Nairobi", "nairobi");
 getWeather("Berlin", "berlin");

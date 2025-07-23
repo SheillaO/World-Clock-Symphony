@@ -2,103 +2,78 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>World Clock Symphony</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
     <script
         src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.6.0/moment-timezone-with-data-1970-2030.min.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=PT+Mono&family=Poppins&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
     <script src="https://unpkg.com/axios@1.6.7/dist/axios.min.js"></script>
 </head>
 
 <body>
     <div class="container">
-        <header class="header">
-            <h1 class="main-title">World Clock Symphony</h1>
-        </header>
+        <h1>World Clock Symphony</h1>
 
-        <div class="city-selector">
-            <select id="city">
-                <option value="">Choose a City ....</option>
-                <option value="current">My Current Location 🌍</option>
-                <option value="America/New_York">New York 🗽</option>
-                <option value="Europe/London">London 💂‍♂️</option>
-                <option value="Asia/Tokyo">Tokyo 🍣</option>
-                <option value="Australia/Sydney">Sydney 🌏</option>
-                <option value="Africa/Johannesburg">Johannesburg 🌍</option>
-            </select>
+        <select id="city">
+            <option value="">Choose a City ....</option>
+            <option value="current">My Current Location 🌍</option>
+            <option value="America/New_York">New York 🗽</option>
+            <option value="Europe/London">London 💂‍♂️</option>
+            <option value="Asia/Tokyo">Tokyo 🍣</option>
+            <option value="Australia/Sydney">Sydney 🌏</option>
+            <option value="Africa/Johannesburg">Johannesburg 🌍</option>
+        </select>
+
+        <div id="cities">
+            <div class="city" id="nairobi">
+                <div>
+                    <h2>Nairobi 💹</h2>
+                    <div class="date"></div>
+                </div>
+                <div class="time"></div>
+                <div class="weather-info">
+                    <div class="temperature"></div>
+                    <div class="humidity"></div>
+                    <div class="wind-speed"></div>
+                    <div class="icon"></div>
+                </div>
+            </div>
+
+            <div class="city" id="berlin">
+                <div>
+                    <h2>Berlin 🍻🏞️</h2>
+                    <div class="date"></div>
+                </div>
+                <div class="time"></div>
+                <div class="weather-info">
+                    <div class="temperature"></div>
+                    <div class="humidity"></div>
+                    <div class="wind-speed"></div>
+                    <div class="icon"></div>
+                </div>
+            </div>
         </div>
 
-        <div id="cities" class="cities-grid">
-            <!-- Nairobi -->
-            <div class="city-card float slide-up" id="nairobi-card">
-                <div class="city" id="nairobi">
-                    <div class="city-header">
-                        <h2>Nairobi 💹</h2>
-                        <div class="date"></div>
-                    </div>
-                    <div class="time"></div>
-                    <div class="weather-info">
-                        <div class="temperature"></div>
-                        <div class="humidity"></div>
-                        <div class="wind-speed"></div>
-                        <div class="icon"></div>
-                        <img src="" alt="Weather icon" class="weather-icon" />
-                    </div>
-                </div>
-            </div>
-
-            <!-- Berlin -->
-            <div class="city-card float slide-up" id="berlin-card">
-                <div class="city" id="berlin">
-                    <div class="city-header">
-                        <h2>Berlin 🍻🏞️</h2>
-                        <div class="date"></div>
-                    </div>
-                    <div class="time"></div>
-                    <div class="weather-info">
-                        <div class="temperature"></div>
-                        <div class="humidity"></div>
-                        <div class="wind-speed"></div>
-                        <div class="icon"></div>
-                        <img src="" alt="Weather icon" class="weather-icon" />
-                    </div>
-                </div>
-            </div>
-
-            <!-- Placeholder for selected city -->
-            <div id="selected-city" class="city-card float slide-up">
-                <div class="city"></div>
-            </div>
-
-            <!-- Static Demo Card -->
-            <div class="city-card float slide-up demo-card">
-                <div class="city-header">
-                    <span class="weather-icon sunny">☀️</span>
-                    <h2 class="city-name">Nairobi</h2>
-                </div>
-                <div class="demo-weather">
-                    <div class="temperature">24°C</div>
-                    <div class="weather-description">Sunny</div>
-                    <div class="time">11:34 <small>AM</small></div>
-                    <div class="date">Wed, 23 July</div>
-                </div>
-            </div>
+        <div id="selected-city">
+            <div class="city"></div>
         </div>
     </div>
 
-    <footer class="footer">
+    <footer>
         <p>
             This project was coded by ❤️ Olga and is open-sourced on
             <a class="link-website" href="https://github.com/SheillaO/World-Clock-Symphony" target="_blank"
-                rel="noopener noreferrer">GitHub</a>
+                rel="noopener noreferrer"> GitHub </a>
             and hosted on
             <a class="link-website" href="https://worldclocksymphony.netlify.app/" target="_blank"
-                rel="noopener noreferrer">Netlify</a>.
+                rel="noopener noreferrer"> Netlify </a>.
         </p>
     </footer>
 
