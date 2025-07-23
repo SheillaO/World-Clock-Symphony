@@ -11,31 +11,33 @@
         src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.6.0/moment-timezone-with-data-1970-2030.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-        href="https://fonts.googleapis.com/css2?family=PT+Mono&family=Poppins&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
-        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet" />
     <script src="https://unpkg.com/axios@1.6.7/dist/axios.min.js"></script>
 </head>
 
 <body>
     <div class="container">
-        <h1>World Clock Symphony</h1>
+        <header class="header">
+            <h1 class="main-title">World Clock Symphony</h1>
+        </header>
 
-        <select id="city">
-            <option value="">Choose a City ....</option>
-            <option value="current">My Current Location 🌍</option>
-            <option value="America/New_York">New York 🗽</option>
-            <option value="Europe/London">London 💂‍♂️</option>
-            <option value="Asia/Tokyo">Tokyo 🍣</option>
-            <option value="Australia/Sydney">Sydney 🌏</option>
-            <option value="Africa/Johannesburg">Johannesburg 🌍</option>
-        </select>
+        <div class="city-selector">
+            <select id="city">
+                <option value="">Choose a City ....</option>
+                <option value="current">My Current Location 🌍</option>
+                <option value="America/New_York">New York 🗽</option>
+                <option value="Europe/London">London 💂‍♂️</option>
+                <option value="Asia/Tokyo">Tokyo 🍣</option>
+                <option value="Australia/Sydney">Sydney 🌏</option>
+                <option value="Africa/Johannesburg">Johannesburg 🌍</option>
+            </select>
+        </div>
 
-        <div id="cities">
+        <div id="cities" class="cities-grid">
             <!-- Nairobi -->
             <div class="city-card float slide-up" id="nairobi-card">
                 <div class="city" id="nairobi">
-                    <div>
+                    <div class="city-header">
                         <h2>Nairobi 💹</h2>
                         <div class="date"></div>
                     </div>
@@ -53,7 +55,7 @@
             <!-- Berlin -->
             <div class="city-card float slide-up" id="berlin-card">
                 <div class="city" id="berlin">
-                    <div>
+                    <div class="city-header">
                         <h2>Berlin 🍻🏞️</h2>
                         <div class="date"></div>
                     </div>
@@ -69,17 +71,17 @@
             </div>
 
             <!-- Placeholder for selected city -->
-            <div id="selected-city">
+            <div id="selected-city" class="city-card float slide-up">
                 <div class="city"></div>
             </div>
 
-            <!-- New Nairobi Display (Demo Card) -->
-            <div class="city city-card float slide-up">
-                <div>
+            <!-- Static Demo Card -->
+            <div class="city-card float slide-up demo-card">
+                <div class="city-header">
                     <span class="weather-icon sunny">☀️</span>
                     <h2 class="city-name">Nairobi</h2>
                 </div>
-                <div>
+                <div class="demo-weather">
                     <div class="temperature">24°C</div>
                     <div class="weather-description">Sunny</div>
                     <div class="time">11:34 <small>AM</small></div>
@@ -89,14 +91,14 @@
         </div>
     </div>
 
-    <footer>
+    <footer class="footer">
         <p>
             This project was coded by ❤️ Olga and is open-sourced on
             <a class="link-website" href="https://github.com/SheillaO/World-Clock-Symphony" target="_blank"
-                rel="noopener noreferrer"> GitHub </a>
+                rel="noopener noreferrer">GitHub</a>
             and hosted on
             <a class="link-website" href="https://worldclocksymphony.netlify.app/" target="_blank"
-                rel="noopener noreferrer"> Netlify </a>.
+                rel="noopener noreferrer">Netlify</a>.
         </p>
     </footer>
 
