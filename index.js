@@ -41,7 +41,6 @@ function updateTime() {
     ".city[id]:not(#nairobi):not(#berlin)"
   );
   dynamicCities.forEach((cityDiv) => {
-    // Convert id back to timezone format
     let timeZone = cityDiv.id.replace(/-/g, "/");
     let cityTime = moment().tz(timeZone);
 
@@ -65,10 +64,10 @@ function updateCity(event) {
   if (cityTimeZone === "current") {
     cityTimeZone = moment.tz.guess();
   }
-  // Replace slashes and spaces to create a valid HTML id
+
   let cityId = cityTimeZone.replace(/\//g, "-").replace(/\s+/g, "-");
   if (document.getElementById(cityId)) {
-    return; // Prevent duplicate city entries
+    return;
   }
 
   let cityName = cityTimeZone.split("/").pop().replace(/_/g, " ");
@@ -76,63 +75,65 @@ function updateCity(event) {
   let citiesElement = document.querySelector("#cities");
 
   if (citiesElement) {
-    // Create city container
     const cityDiv = document.createElement("div");
     cityDiv.className = "city";
     cityDiv.id = cityId;
 
-    // Create inner HTML structure
-    cityDiv.innerHTML = `
-      <div>
-        <h2>${cityName}</h2>
-        <div class="date">${cityTime.format("dddd, MMMM Do YYYY")}</div>
-        <div class="temperature"></div>
-        <div class="humidity"></div>
-        <div class="wind-speed"></div>
-        <div class="icon"></div>
-      </div>
-      <div class="time">${cityTime.format("h:mm:ss")} <small>${cityTime.format("A")}</small></div>
+    // 🔥 Add styling classes
+    const cityCard = document.createElement("div");
+    cityCard.className = "city-card float slide-up";
+
+    cityCard.innerHTML = `
+      <h2>${cityName}</h2>
+      <div class="date">${cityTime.format("dddd, MMMM Do YYYY")}</div>
+      <div class="temperature"></div>
+      <div class="humidity"></div>
+      <div class="wind-speed"></div>
+      <div class="weather-icon"></div>
+      <div class="time">${cityTime.format("h:mm:ss")} <small>${cityTime.format(
+      "A"
+    )}</small></div>
     `;
 
-    // Append to cities container
+    cityDiv.appendChild(cityCard);
     citiesElement.appendChild(cityDiv);
 
-    // Fetch and display weather for the new city
     getWeather(cityName, cityId);
-  } else {
-    console.warn('Could not find the #cities element in the DOM.');
   }
 }
 
-updateTime();
-setInterval(updateTime, 1000);
-
-let citiesSelectElement = document.querySelector("#city");
-if (citiesSelectElement) {
-  citiesSelectElement.addEventListener("change", updateCity);
-}
 function displayWeather(cityId, response) {
   const cityElement = document.querySelector(`#${cityId}`);
   if (!cityElement) return;
 
-  const tempEl = cityElement.querySelector(".temperature");
-  const humidityEl = cityElement.querySelector(".humidity");
-  const windEl = cityElement.querySelector(".wind-speed");
-  const iconEl = cityElement.querySelector(".icon");
+  const card = cityElement.querySelector(".city-card");
+  const tempEl = card.querySelector(".temperature");
+  const humidityEl = card.querySelector(".humidity");
+  const windEl = card.querySelector(".wind-speed");
+  const iconEl = card.querySelector(".weather-icon");
 
   const temperature = Math.round(response.data.temperature.current);
   const humidity = response.data.temperature.humidity;
   const windSpeed = Math.round(response.data.wind.speed);
   const iconUrl = response.data.condition.icon_url;
+  const condition = response.data.condition.description.toLowerCase();
 
   if (tempEl) tempEl.textContent = `🌡️ ${temperature}°C`;
   if (humidityEl) humidityEl.textContent = `💧 ${humidity}%`;
   if (windEl) windEl.textContent = `💨 ${windSpeed} km/h`;
-  if (iconEl) iconEl.innerHTML = `<img src="${iconUrl}" alt="Weather icon" />`;
+  if (iconEl) {
+    iconEl.innerHTML = `<img src="${iconUrl}" alt="Weather icon" />`;
+    // 🔥 Add condition-based class for animation
+    if (condition.includes("sun")) {
+      iconEl.classList.add("sunny");
+    } else if (condition.includes("rain")) {
+      iconEl.classList.add("rainy");
+    }
+  }
 }
 
 function getWeather(cityName, cityId) {
-  const apiKey = "7601b0fff0179o9d5059a8db34ctbc66"; // Corrected key
+  const apiKey = "7601b0fff0179o9d5059a8db34ctbc66";
   const apiUrl = `https://api.shecodes.io/weather/v1/current?query=${cityName}&key=${apiKey}&units=metric`;
 
   axios
@@ -145,7 +146,15 @@ function getWeather(cityName, cityId) {
     });
 }
 
-// Call this for each city you want
+// Initial setup
+updateTime();
+setInterval(updateTime, 1000);
+
+let citiesSelectElement = document.querySelector("#city");
+if (citiesSelectElement) {
+  citiesSelectElement.addEventListener("change", updateCity);
+}
+
+// Load weather for static cities
 getWeather("Nairobi", "nairobi");
 getWeather("Berlin", "berlin");
-

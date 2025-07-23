@@ -2,15 +2,18 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>World Clock Symphony</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.6.0/moment-timezone-with-data-1970-2030.min.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=PT+Mono&family=Poppins&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.6.0/moment-timezone-with-data-1970-2030.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=PT+Mono&family=Poppins&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet" />
     <script src="https://unpkg.com/axios@1.6.7/dist/axios.min.js"></script>
 </head>
 
@@ -29,37 +32,60 @@
         </select>
 
         <div id="cities">
-            <div class="city" id="nairobi">
-                <div>
-                    <h2>Nairobi 💹</h2>
-                    <div class="date"></div>
-                </div>
-                <div class="time"></div>
-                <div class="weather-info">
-                    <div class="temperature"></div>
-                    <div class="humidity"></div>
-                    <div class="wind-speed"></div>
-                    <div class="icon"></div>
+            <!-- Nairobi -->
+            <div class="city-card float slide-up" id="nairobi-card">
+                <div class="city" id="nairobi">
+                    <div>
+                        <h2>Nairobi 💹</h2>
+                        <div class="date"></div>
+                    </div>
+                    <div class="time"></div>
+                    <div class="weather-info">
+                        <div class="temperature"></div>
+                        <div class="humidity"></div>
+                        <div class="wind-speed"></div>
+                        <div class="icon"></div>
+                        <img src="" alt="Weather icon" class="weather-icon" />
+                    </div>
                 </div>
             </div>
 
-            <div class="city" id="berlin">
-                <div>
-                    <h2>Berlin 🍻🏞️</h2>
-                    <div class="date"></div>
-                </div>
-                <div class="time"></div>
-                <div class="weather-info">
-                    <div class="temperature"></div>
-                    <div class="humidity"></div>
-                    <div class="wind-speed"></div>
-                    <div class="icon"></div>
+            <!-- Berlin -->
+            <div class="city-card float slide-up" id="berlin-card">
+                <div class="city" id="berlin">
+                    <div>
+                        <h2>Berlin 🍻🏞️</h2>
+                        <div class="date"></div>
+                    </div>
+                    <div class="time"></div>
+                    <div class="weather-info">
+                        <div class="temperature"></div>
+                        <div class="humidity"></div>
+                        <div class="wind-speed"></div>
+                        <div class="icon"></div>
+                        <img src="" alt="Weather icon" class="weather-icon" />
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div id="selected-city">
-            <div class="city"></div>
+            <!-- Placeholder for selected city -->
+            <div id="selected-city">
+                <div class="city"></div>
+            </div>
+
+            <!-- New Nairobi Display (Demo Card) -->
+            <div class="city city-card float slide-up">
+                <div>
+                    <span class="weather-icon sunny">☀️</span>
+                    <h2 class="city-name">Nairobi</h2>
+                </div>
+                <div>
+                    <div class="temperature">24°C</div>
+                    <div class="weather-description">Sunny</div>
+                    <div class="time">11:34 <small>AM</small></div>
+                    <div class="date">Wed, 23 July</div>
+                </div>
+            </div>
         </div>
     </div>
 
