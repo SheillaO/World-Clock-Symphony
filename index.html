@@ -4,16 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>World Clock Symphony</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
-    <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.6.0/moment-timezone-with-data-1970-2030.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.6.0/moment-timezone-with-data-1970-2030.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=PT+Mono&family=Poppins&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
-        rel="stylesheet">
-    <title>World Clock Symphony</title>
+    <link href="https://fonts.googleapis.com/css2?family=PT+Mono&family=Poppins&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/axios@1.6.7/dist/axios.min.js"></script>
 </head>
 
 <body>
@@ -31,42 +29,52 @@
         </select>
 
         <div id="cities">
-            <div id="static-cities">
             <div class="city" id="nairobi">
                 <div>
-                    <h2>Nairobi 💹 </h2>
+                    <h2>Nairobi 💹</h2>
                     <div class="date"></div>
                 </div>
                 <div class="time"></div>
+                <div class="weather-info">
+                    <div class="temperature"></div>
+                    <div class="humidity"></div>
+                    <div class="wind-speed"></div>
+                    <div class="icon"></div>
+                </div>
             </div>
 
             <div class="city" id="berlin">
                 <div>
-                    <h2>Berlin🍻🏞️</h2>
+                    <h2>Berlin 🍻🏞️</h2>
                     <div class="date"></div>
                 </div>
                 <div class="time"></div>
+                <div class="weather-info">
+                    <div class="temperature"></div>
+                    <div class="humidity"></div>
+                    <div class="wind-speed"></div>
+                    <div class="icon"></div>
+                </div>
             </div>
         </div>
-        </div>
 
-
-    <div id="selected-city">
-        <div class="city">
+        <div id="selected-city">
+            <div class="city"></div>
         </div>
     </div>
 
-
     <footer>
         <p>
-            This project was coded by ❤️ Olga and is open-sourced on <a class="link-website"
-                href="https://github.com/SheillaO/World-Clock-Symphony" target="_blank" rel="noopener noreferrer">
-                GitHub </a> and hosted on <a class="link-website" href=" https://worldclocksymphony.netlify.app/"
-                target="_blank" rel="noopener noreferrer"> Netlify </a>.
+            This project was coded by ❤️ Olga and is open-sourced on
+            <a class="link-website" href="https://github.com/SheillaO/World-Clock-Symphony" target="_blank"
+                rel="noopener noreferrer"> GitHub </a>
+            and hosted on
+            <a class="link-website" href="https://worldclocksymphony.netlify.app/" target="_blank"
+                rel="noopener noreferrer"> Netlify </a>.
         </p>
     </footer>
 
+    <script src="index.js"></script>
 </body>
-<script src="index.js"></script>
 
 </html>

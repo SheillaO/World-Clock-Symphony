@@ -86,12 +86,19 @@ function updateCity(event) {
       <div>
         <h2>${cityName}</h2>
         <div class="date">${cityTime.format("dddd, MMMM Do YYYY")}</div>
+        <div class="temperature"></div>
+        <div class="humidity"></div>
+        <div class="wind-speed"></div>
+        <div class="icon"></div>
       </div>
       <div class="time">${cityTime.format("h:mm:ss")} <small>${cityTime.format("A")}</small></div>
     `;
 
     // Append to cities container
     citiesElement.appendChild(cityDiv);
+
+    // Fetch and display weather for the new city
+    getWeather(cityName, cityId);
   } else {
     console.warn('Could not find the #cities element in the DOM.');
   }
@@ -104,3 +111,41 @@ let citiesSelectElement = document.querySelector("#city");
 if (citiesSelectElement) {
   citiesSelectElement.addEventListener("change", updateCity);
 }
+function displayWeather(cityId, response) {
+  const cityElement = document.querySelector(`#${cityId}`);
+  if (!cityElement) return;
+
+  const tempEl = cityElement.querySelector(".temperature");
+  const humidityEl = cityElement.querySelector(".humidity");
+  const windEl = cityElement.querySelector(".wind-speed");
+  const iconEl = cityElement.querySelector(".icon");
+
+  const temperature = Math.round(response.data.temperature.current);
+  const humidity = response.data.temperature.humidity;
+  const windSpeed = Math.round(response.data.wind.speed);
+  const iconUrl = response.data.condition.icon_url;
+
+  if (tempEl) tempEl.textContent = `🌡️ ${temperature}°C`;
+  if (humidityEl) humidityEl.textContent = `💧 ${humidity}%`;
+  if (windEl) windEl.textContent = `💨 ${windSpeed} km/h`;
+  if (iconEl) iconEl.innerHTML = `<img src="${iconUrl}" alt="Weather icon" />`;
+}
+
+function getWeather(cityName, cityId) {
+  const apiKey = "7601b0fff0179o9d5059a8db34ctbc66"; // Corrected key
+  const apiUrl = `https://api.shecodes.io/weather/v1/current?query=${cityName}&key=${apiKey}&units=metric`;
+
+  axios
+    .get(apiUrl)
+    .then((response) => {
+      displayWeather(cityId, response);
+    })
+    .catch((error) => {
+      console.warn(`Weather data not found for ${cityName}:`, error);
+    });
+}
+
+// Call this for each city you want
+getWeather("Nairobi", "nairobi");
+getWeather("Berlin", "berlin");
+
