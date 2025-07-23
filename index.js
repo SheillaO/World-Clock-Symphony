@@ -20,6 +20,7 @@ function updateTime() {
     let berlinDateElement = berlinElement.querySelector(".date");
     let berlinTimeElement = berlinElement.querySelector(".time");
     let berlinTime = moment().tz("Europe/Berlin");
+    berlinDateElement.innerHTML = berlinTime.format("dddd, MMMM Do YYYY");
     berlinTimeElement.innerHTML =
       berlinTime.format("h:mm:ss") +
       " <small>" +
@@ -34,6 +35,8 @@ function updateCity(event) {
     cityTimeZone = moment.tz.guess();
   }
 
+  window.selectedTimeZone = cityTimeZone;
+
   let cityParts = cityTimeZone.split("/");
   let cityName =
     cityParts.length > 1
@@ -42,7 +45,7 @@ function updateCity(event) {
 
   let cityTime = moment().tz(cityTimeZone);
   let citiesElement = document.querySelector("#cities");
-  citiesElement.innerHTML += `
+  citiesElement.innerHTML = `
   <div class="city">
     <div>
       <h2>${cityName}</h2>
@@ -56,8 +59,17 @@ function updateCity(event) {
 }
 
 updateTime();
-setInterval(updateTime, 10);
+setInterval(updateTime, 1000);
 
+// Run selected city clock if selected
+clearInterval(window.selectedCityClock);
+window.selectedCityClock = setInterval(() => {
+  if (window.selectedTimeZone) {
+    updateCity({ target: { value: window.selectedTimeZone } });
+  }
+}, 1000);
+
+// Dropdown listener
 let citiesSelectElement = document.querySelector("#city");
 if (citiesSelectElement) {
   citiesSelectElement.addEventListener("change", updateCity);

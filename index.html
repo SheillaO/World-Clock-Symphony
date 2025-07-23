@@ -22,6 +22,7 @@
 
         <select id="city">
             <option value="">Choose a City ....</option>
+            <option value="current">My Current Location 🌍</option>
             <option value="America/New_York">New York 🗽</option>
             <option value="Europe/London">London 💂‍♂️</option>
             <option value="Asia/Tokyo">Tokyo 🍣</option>
@@ -30,9 +31,27 @@
         </select>
 
         <div id="cities">
-            
+            <div id="static-cities">
+            <div class="city" id="nairobi">
+                <div>
+                    <h2>Nairobi 💹 </h2>
+                    <div class="date"></div>
+                </div>
+                <div class="time"></div>
+            </div>
+
+            <div class="city" id="berlin">
+                <div>
+                    <h2>Berlin🍻🏞️</h2>
+                    <div class="date"></div>
+                </div>
+                <div class="time"></div>
+            </div>
+        </div>
+        </div>
 
     </div>
+    <div id="selected-city"></div>
 
 
     <footer>
