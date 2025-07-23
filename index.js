@@ -1,137 +1,94 @@
-// -------------------------
-// 🕒 Time + Weather Logic
-// -------------------------
-
+// 🕒 Update time for Nairobi and Berlin
 function updateTime() {
   // Nairobi
-  let nairobiElement = document.querySelector("#nairobi");
-  if (nairobiElement) {
-    let nairobiDateElement = nairobiElement.querySelector(".date");
-    let nairobiTimeElement = nairobiElement.querySelector(".time");
-    let nairobiTime = moment().tz("Africa/Nairobi");
+  const nairobi = document.querySelector("#nairobi");
+  if (nairobi) {
+    const nairobiDate = nairobi.querySelector(".date");
+    const nairobiTime = nairobi.querySelector(".time");
+    const time = moment().tz("Africa/Nairobi");
 
-    nairobiDateElement.innerHTML = nairobiTime.format("MMMM Do YYYY");
-    nairobiTimeElement.innerHTML = nairobiTime.format(
-      "h:mm:ss [<small>]A[</small>]"
-    );
+    nairobiDate.innerHTML = time.format("MMMM Do YYYY");
+    nairobiTime.innerHTML =
+      time.format("h:mm:ss") + ` <small>${time.format("A")}</small>`;
   }
 
   // Berlin
-  let berlinElement = document.querySelector("#berlin");
-  if (berlinElement) {
-    let berlinDateElement = berlinElement.querySelector(".date");
-    let berlinTimeElement = berlinElement.querySelector(".time");
-    let berlinTime = moment().tz("Europe/Berlin");
+  const berlin = document.querySelector("#berlin");
+  if (berlin) {
+    const berlinDate = berlin.querySelector(".date");
+    const berlinTime = berlin.querySelector(".time");
+    const time = moment().tz("Europe/Berlin");
 
-    berlinDateElement.innerHTML = berlinTime.format("MMMM Do YYYY");
-    berlinTimeElement.innerHTML = berlinTime.format(
-      "h:mm:ss [<small>]A[</small>]"
-    );
+    berlinDate.innerHTML = time.format("MMMM Do YYYY");
+    berlinTime.innerHTML =
+      time.format("h:mm:ss") + ` <small>${time.format("A")}</small>`;
   }
 }
 
-// -------------------------
-// 🌍 Selected City Logic
-// -------------------------
+// ☁️ Fetch weather and update card by elementId
+function fetchWeather(cityName, elementId) {
+  const apiKey = "7601b0fff0179o9d5059a8db34ctbc66"; // Your SheCodes API key
+  const url = `https://api.shecodes.io/weather/v1/current?query=${cityName}&key=${apiKey}&units=metric`;
 
-let selectedCityTimeZone = null;
-
-function updateCity(event) {
-  selectedCityTimeZone = event.target.value;
-  if (selectedCityTimeZone === "current") {
-    selectedCityTimeZone = moment.tz.guess();
-  }
-
-  const cityName = getCityNameFromTimezone(selectedCityTimeZone);
-  handleCitySelection(cityName); // ⬅️ Trigger background video update
+  fetch(url)
+    .then((res) => res.json())
+    .then((data) => {
+      const weatherEl = document.querySelector(`#${elementId} .weather`);
+      if (weatherEl && data.condition) {
+        weatherEl.innerHTML = `
+          <img src="${data.condition.icon_url}" alt="${
+          data.condition.description
+        }" width="40" />
+          ${Math.round(data.temperature.current)}°C — ${
+          data.condition.description
+        }
+        `;
+      }
+    })
+    .catch(() => {
+      const weatherEl = document.querySelector(`#${elementId} .weather`);
+      if (weatherEl) weatherEl.innerText = "Weather unavailable";
+    });
 }
 
-function updateSelectedCityTime() {
-  if (selectedCityTimeZone) {
-    let cityTime = moment().tz(selectedCityTimeZone);
-    let cityName = getCityNameFromTimezone(selectedCityTimeZone);
-    let citiesElement = document.querySelector("#cities");
+// 🌍 Update time, date, and weather for selected city from dropdown
+function updateSelectedCity(event) {
+  let cityTimeZone = event.target.value;
+  if (!cityTimeZone) return;
 
-    citiesElement.innerHTML = `
-      <div class="city">
-        <div>
-          <h2>${cityName}</h2>
-          <div class="date">${cityTime.format("MMMM Do YYYY")}</div>
-        </div>
-        <div class="time">${cityTime.format(
-          "h:mm:ss"
-        )} <small>${cityTime.format("A")}</small></div>
+  if (cityTimeZone === "current") {
+    cityTimeZone = moment.tz.guess();
+  }
+
+  let cityName = cityTimeZone.split("/")[1].replace("_", " ");
+  let cityTime = moment().tz(cityTimeZone);
+
+  const citiesElement = document.querySelector("#cities");
+
+  citiesElement.innerHTML = `
+    <div class="city-card" id="selected-city">
+      <div class="city-header">
+        <h2>${cityName}</h2>
+        <div class="date">${cityTime.format("MMMM Do YYYY")}</div>
       </div>
-    `;
-  }
+      <div class="time">${cityTime.format("h:mm:ss")} <small>${cityTime.format(
+    "A"
+  )}</small></div>
+      <div class="weather">Loading weather...</div>
+    </div>
+  `;
+
+  // Fetch weather for selected city
+  fetchWeather(cityName, "selected-city");
 }
 
-function getCityNameFromTimezone(timezone) {
-  const parts = timezone.split("/");
-  return parts.length > 1 ? parts[1].replace("_", " ") : timezone;
-}
+// Initial calls
+updateTime();
+fetchWeather("Nairobi", "nairobi");
+fetchWeather("Berlin", "berlin");
 
-// -------------------------
-// ⏰ Start the Clock
-// -------------------------
+// Run updateTime every second
+setInterval(updateTime, 1000);
 
-function updateAll() {
-  updateTime(); // Nairobi & Berlin
-  updateSelectedCityTime(); // Dropdown-selected city
-}
-
-updateAll();
-setInterval(updateAll, 1000);
-
-// -------------------------
-// 📍 Dropdown Listener
-// -------------------------
-
-let citiesSelectElement = document.querySelector("#city");
-citiesSelectElement.addEventListener("change", updateCity);
-
-// -------------------------
-// 🌍 City to Continent Map
-// -------------------------
-
-const cityToContinent = {
-  Nairobi: "Africa",
-  Tokyo: "Asia",
-  "New York": "America",
-  Berlin: "Europe",
-  Sydney: "Australia",
-  London: "Europe",
-  Johannesburg: "Africa",
-};
-
-// -------------------------
-// 🎥 Background Video Logic
-// -------------------------
-
-function changeBackgroundVideo(continent) {
-  const video = document.getElementById("bg-video");
-  const source = document.getElementById("video-source");
-
-  if (!video || !source) return;
-
-  const newSrc = `media/${continent}.mp4`;
-
-  // Only update if the video is different
-  if (!source.src.includes(`${continent}.mp4`)) {
-    video.pause();
-    source.src = newSrc;
-    video.load();
-    video.play();
-  }
-}
-
-// -------------------------
-// 🏙️ City Selection Trigger
-// -------------------------
-
-function handleCitySelection(cityName) {
-  const continent = cityToContinent[cityName];
-  if (continent) {
-    changeBackgroundVideo(continent);
-  }
-}
+// Add dropdown change listener
+document.querySelector("#city").addEventListener("change", updateSelectedCity);

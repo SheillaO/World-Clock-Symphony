@@ -1,76 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>World Clock Symphony</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
     <script
         src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.6.0/moment-timezone-with-data-1970-2030.min.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=PT+Mono&family=Poppins&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
-        rel="stylesheet">
     <script src="https://unpkg.com/axios@1.6.7/dist/axios.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=PT+Mono&family=Poppins&family=Roboto:wght@300;400;700&display=swap"
+        rel="stylesheet" />
 </head>
 
 <body>
+    <div class="main-container">
+        <header>
+            <h1>World Clock Symphony</h1>
+        </header>
 
-<video autoplay muted loop id="bg-video">
-    <source id="video-source" src="media/Africa.mp4" type="video/mp4" />
-</video>
+        <section class="controls">
+            <label for="city">Choose a City:</label>
+            <select id="city">
+                <option value="">-- Select --</option>
+                <option value="current">My Current Location</option>
+                <option value="America/New_York">New York</option>
+                <option value="Europe/London">London</option>
+                <option value="Asia/Tokyo">Tokyo</option>
+                <option value="Australia/Sydney">Sydney</option>
+                <option value="Africa/Johannesburg">Johannesburg</option>
+            </select>
+        </section>
 
-
-<div class="video-overlay"></div>
-
-    <div class="container">
-        <h1>World Clock Symphony</h1>
-
-        <select id="city">
-            <option value="">Choose a City ....</option>
-            <option value="current">My Current Location</option>
-            <option value="America/New_York">New York</option>
-            <option value="Europe/London">London</option>
-            <option value="Asia/Tokyo">Tokyo</option>
-            <option value="Australia/Sydney">Sydney</option>
-            <option value="Africa/Johannesburg">Johannesburg</option>
-        </select>
-
-        <div id="cities">
-            <div class="city" id="nairobi">
-                <div>
+        <section id="cities">
+            <div class="city-card" id="nairobi">
+                <div class="city-header">
                     <h2>Nairobi</h2>
                     <div class="date"></div>
                 </div>
                 <div class="time"></div>
+                <div class="weather"></div>
             </div>
-            <div class="city" id="berlin">
-                <div>
+
+            <div class="city-card" id="berlin">
+                <div class="city-header">
                     <h2>Berlin</h2>
                     <div class="date"></div>
                 </div>
                 <div class="time"></div>
+                <div class="weather"></div>
             </div>
-        </div>
-        </div>
 
-    <footer>
-        <p>
-            This project was coded by ❤️ Olga and is open-sourced on
-            <a class="link-website" href="https://github.com/SheillaO/World-Clock-Symphony" target="_blank"
-                rel="noopener noreferrer"> GitHub </a>
-            and hosted on
-            <a class="link-website" href="https://worldclocksymphony.netlify.app/" target="_blank"
-                rel="noopener noreferrer"> Netlify </a>.
-        </p>
-    </footer>
+            <!-- Selected city info will appear here dynamically -->
+            <div class="city-card" id="selected-city"></div>
+        </section>
 
+        <footer>
+            <p>
+                Built with ❤️ by Olga — Open-sourced on
+                <a href="https://github.com/SheillaO/World-Clock-Symphony" target="_blank">GitHub</a>
+                & hosted on
+                <a href="https://worldclocksymphony.netlify.app/" target="_blank">Netlify</a>
+            </p>
+        </footer>
+    </div>
 
     <script src="index.js"></script>
-
 </body>
 
 </html>
