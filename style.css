@@ -1,10 +1,11 @@
+/* 🌍 Root Variables for Day/Night Theme */
 body {
-  /* 🌞 Day Mode */
+  /* Day Mode */
   --accent-light: #6C63FF;   /* Elegant lavender blue */
   --bg-day: linear-gradient(to top, #e0eaff, #f5f7ff);
   --text-day: #2c2c54;
 
-  /* 🌙 Night Mode */
+  /* Night Mode */
   --accent-dark: #FF6584;    /* Coral pink */
   --bg-night: linear-gradient(to top, #1e1e2f, #2c2c54);
   --text-night: #f4f4fb;
@@ -15,6 +16,37 @@ body {
   line-height: 1.6;
   margin: 0;
   padding: 0;
+}
+
+body.night-mode #theme-toggle {
+  background-color: var(--accent-dark);
+}
+
+/* ✅ Background switches based on time */
+body.day-mode {
+  background: var(--bg-day);
+  color: var(--text-day);
+}
+
+body.night-mode {
+  background: var(--bg-night);
+  color: var(--text-night);
+}
+
+/* Theme Toggle Button */
+#theme-toggle {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 10px 20px;
+  background-color: var(--accent-light);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
 }
 
 /* Typography */
@@ -67,7 +99,7 @@ select:focus {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
-/* City Cards */
+/* City Cards (Clock Display) */
 .city {
   display: flex;
   justify-content: space-between;
@@ -78,36 +110,31 @@ select:focus {
   transition: background 1s ease, color 1s ease;
 }
 
+/* ✅ Remove these to clean card background */
+.city.day,
+.city.night {
+  background: none;
+  color: inherit;
+}
+
+/* ✅ Let text color be default unless overridden */
+.city.day .time,
+.city.night .time {
+  border-bottom: none;
+}
+
 .city:last-child {
   border-bottom: none;
 }
 
+/* ✅ Optional: Subtle hover effect for cards */
 .city:hover {
-  background-color: #f1f1fc;
+  background-color: rgba(255, 255, 255, 0.08);
   transform: translateY(-2px);
   border-radius: 8px;
 }
 
-/* Day/Night Theming */
-.city.day {
-  background: var(--bg-day);
-  color: var(--text-day);
-}
-
-.city.night {
-  background: var(--bg-night);
-  color: var(--text-night);
-}
-
-.city.day .time {
-  border-bottom: 2px solid var(--accent-light);
-}
-
-.city.night .time {
-  border-bottom: 2px solid var(--accent-dark);
-}
-
-/* Time & Date */
+/* Time & Date Styling */
 .time {
   font-size: 46px;
   font-weight: bold;
@@ -134,3 +161,4 @@ footer {
   margin: 40px 0 20px;
   color: rgba(0, 0, 0, 0.6);
 }
+

@@ -1,5 +1,8 @@
+// -------------------------
+// 🕒 Time + Weather Logic
+// -------------------------
+
 function updateTime() {
-  // nairobi
   let nairobiElement = document.querySelector("#nairobi");
   if (nairobiElement) {
     let nairobiDateElement = nairobiElement.querySelector(".date");
@@ -18,12 +21,12 @@ function updateTime() {
     }
   }
 
-  // berlin
   let berlinElement = document.querySelector("#berlin");
   if (berlinElement) {
     let berlinDateElement = berlinElement.querySelector(".date");
     let berlinTimeElement = berlinElement.querySelector(".time");
     let berlinTime = moment().tz("Europe/Berlin");
+
     if (berlinDateElement) {
       berlinDateElement.innerHTML = berlinTime.format("dddd, MMMM Do YYYY");
     }
@@ -36,7 +39,6 @@ function updateTime() {
     }
   }
 
-  // dynamic cities
   let dynamicCities = document.querySelectorAll(
     ".city[id]:not(#nairobi):not(#berlin)"
   );
@@ -59,6 +61,13 @@ function updateTime() {
   });
 }
 
+updateTime();
+setInterval(updateTime, 1000);
+
+// -------------------------
+// 📍 Add City Logic
+// -------------------------
+
 function updateCity(event) {
   let cityTimeZone = event.target.value;
   if (cityTimeZone === "current") {
@@ -66,12 +75,10 @@ function updateCity(event) {
   }
 
   let cityId = cityTimeZone.replace(/\//g, "-").replace(/\s+/g, "-");
-  if (document.getElementById(cityId)) {
-    return;
-  }
+  if (document.getElementById(cityId)) return;
 
-  // ✅ Get full name + emoji from selected option
-  let cityName = event.target.options[event.target.selectedIndex].text;
+  let cityNameRaw = event.target.options[event.target.selectedIndex].text;
+  const cleanCityName = cityNameRaw.replace(/[^a-zA-Z\s]/g, "").trim();
 
   let cityTime = moment().tz(cityTimeZone);
   let citiesElement = document.querySelector("#cities");
@@ -83,7 +90,7 @@ function updateCity(event) {
 
     cityDiv.innerHTML = `
       <div>
-        <h2>${cityName}</h2>
+        <h2>${cityNameRaw}</h2>
         <div class="date">${cityTime.format("dddd, MMMM Do YYYY")}</div>
       </div>
       <div class="time">${cityTime.format("h:mm:ss")} <small>${cityTime.format(
@@ -98,25 +105,19 @@ function updateCity(event) {
     `;
 
     citiesElement.appendChild(cityDiv);
-
-    // 🔥 Apply day/night theme for new city
     applyDayNightClasses();
-
-    // ✅ Clean emoji before using cityName in API call
-    const cleanCityName = cityName.replace(/[^a-zA-Z\s]/g, "").trim();
-    getWeather(cleanCityName, cityId);
-  } else {
-    console.warn("Could not find the #cities element in the DOM.");
+    getWeather(cleanCityName || cityNameRaw, cityId);
   }
 }
-
-updateTime();
-setInterval(updateTime, 1000);
 
 let citiesSelectElement = document.querySelector("#city");
 if (citiesSelectElement) {
   citiesSelectElement.addEventListener("change", updateCity);
 }
+
+// -------------------------
+// 🌦️ Weather API (SheCodes)
+// -------------------------
 
 function displayWeather(cityId, response) {
   const cityElement = document.querySelector(`#${cityId}`);
@@ -144,19 +145,18 @@ function getWeather(cityName, cityId) {
 
   axios
     .get(apiUrl)
-    .then((response) => {
-      displayWeather(cityId, response);
-    })
+    .then((response) => displayWeather(cityId, response))
     .catch((error) => {
       console.warn(`Weather data not found for ${cityName}:`, error);
     });
 }
 
-// Initial weather load
 getWeather("Nairobi", "nairobi");
 getWeather("Berlin", "berlin");
 
-
+// -------------------------
+// 🌗 Auto Day/Night Class for Cards
+// -------------------------
 
 function getTimezoneFromCityId(cityId) {
   return cityId.replace(/-/g, "/");
@@ -181,6 +181,49 @@ function applyDayNightClasses() {
   });
 }
 
-// Call on load and continuously every 5 minutes
 applyDayNightClasses();
 setInterval(applyDayNightClasses, 5 * 60 * 1000);
+
+// -------------------------
+// 🎨 Theme Toggle Logic (No Conflict)
+// -------------------------
+
+let manualTheme = false;
+
+function updateThemeBasedOnTime() {
+  if (manualTheme) return;
+
+  const hour = moment().hour();
+  const body = document.body;
+
+  body.classList.remove("day-mode", "night-mode");
+
+  if (hour >= 6 && hour < 18) {
+    body.classList.add("day-mode");
+  } else {
+    body.classList.add("night-mode");
+  }
+}
+
+updateThemeBasedOnTime();
+setInterval(updateThemeBasedOnTime, 60 * 1000);
+
+document.addEventListener("DOMContentLoaded", function () {
+  const toggleBtn = document.querySelector("#theme-toggle");
+
+  if (toggleBtn) {
+    toggleBtn.addEventListener("click", () => {
+      manualTheme = true;
+
+      const body = document.body;
+
+      if (body.classList.contains("day-mode")) {
+        body.classList.remove("day-mode");
+        body.classList.add("night-mode");
+      } else {
+        body.classList.remove("night-mode");
+        body.classList.add("day-mode");
+      }
+    });
+  }
+});
