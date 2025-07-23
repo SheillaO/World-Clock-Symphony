@@ -6,12 +6,16 @@ function updateTime() {
     let nairobiTimeElement = nairobiElement.querySelector(".time");
     let nairobiTime = moment().tz("Africa/Nairobi");
 
-    nairobiDateElement.innerHTML = nairobiTime.format("dddd, MMMM Do YYYY");
-    nairobiTimeElement.innerHTML =
-      nairobiTime.format("h:mm:ss") +
-      " <small>" +
-      nairobiTime.format("A") +
-      "</small>";
+    if (nairobiDateElement) {
+      nairobiDateElement.innerHTML = nairobiTime.format("dddd, MMMM Do YYYY");
+    }
+    if (nairobiTimeElement) {
+      nairobiTimeElement.innerHTML =
+        nairobiTime.format("h:mm:ss") +
+        " <small>" +
+        nairobiTime.format("A") +
+        "</small>";
+    }
   }
 
   // berlin
@@ -20,13 +24,40 @@ function updateTime() {
     let berlinDateElement = berlinElement.querySelector(".date");
     let berlinTimeElement = berlinElement.querySelector(".time");
     let berlinTime = moment().tz("Europe/Berlin");
-    berlinDateElement.innerHTML = berlinTime.format("dddd, MMMM Do YYYY");
-    berlinTimeElement.innerHTML =
-      berlinTime.format("h:mm:ss") +
-      " <small>" +
-      berlinTime.format("A") +
-      "</small>";
+    if (berlinDateElement) {
+      berlinDateElement.innerHTML = berlinTime.format("dddd, MMMM Do YYYY");
+    }
+    if (berlinTimeElement) {
+      berlinTimeElement.innerHTML =
+        berlinTime.format("h:mm:ss") +
+        " <small>" +
+        berlinTime.format("A") +
+        "</small>";
+    }
   }
+
+  // dynamic cities (excluding nairobi and berlin)
+  let dynamicCities = document.querySelectorAll(
+    ".city[id]:not(#nairobi):not(#berlin)"
+  );
+  dynamicCities.forEach((cityDiv) => {
+    // Convert id back to timezone format
+    let timeZone = cityDiv.id.replace(/-/g, "/");
+    let cityTime = moment().tz(timeZone);
+
+    let dateElement = cityDiv.querySelector(".date");
+    let timeElement = cityDiv.querySelector(".time");
+    if (dateElement) {
+      dateElement.innerHTML = cityTime.format("dddd, MMMM Do YYYY");
+    }
+    if (timeElement) {
+      timeElement.innerHTML =
+        cityTime.format("h:mm:ss") +
+        " <small>" +
+        cityTime.format("A") +
+        "</small>";
+    }
+  });
 }
 
 function updateCity(event) {
@@ -34,54 +65,42 @@ function updateCity(event) {
   if (cityTimeZone === "current") {
     cityTimeZone = moment.tz.guess();
   }
-
-  window.selectedTimeZone = cityTimeZone;
-
-  let cityParts = cityTimeZone.split("/");
-  let cityName =
-    cityParts.length > 1
-      ? cityParts[cityParts.length - 1].replace(/_/g, " ")
-      : cityTimeZone;
-
-  let cityTime = moment().tz(cityTimeZone);
-  let citiesElement = document.querySelector("#cities");
-  citiesElement.innerHTML += `
-  <div class="city">
-    <div>
-      <h2>${cityName}</h2>
-      <div class="date">${cityTime.format("MMMM Do YYYY")}</div>
-    </div>
-    <div class="time">${cityTime.format("h:mm:ss")} <small>${cityTime.format(
-    "A"
-  )}</small></div>
-  </div>
-  `;
-}
-
-function updateCity(event) {
-  let cityTimeZone = event.target.value;
-  if (cityTimeZone === "current") {
-    cityTimeZone = moment.tz.guess();
+  // Replace slashes and spaces to create a valid HTML id
+  let cityId = cityTimeZone.replace(/\//g, "-").replace(/\s+/g, "-");
+  if (document.getElementById(cityId)) {
+    return; // Prevent duplicate city entries
   }
-  let cityName = cityTimeZone.replace("_", " ").split("/")[1];
+
+  let cityName = cityTimeZone.split("/").pop().replace(/_/g, " ");
   let cityTime = moment().tz(cityTimeZone);
   let citiesElement = document.querySelector("#cities");
-  citiesElement.innerHTML = `
-  <div class="city">
-    <div>
-      <h2>${cityName}</h2>
-      <div class="date">${cityTime.format("MMMM	Do YYYY")}</div>
-    </div>
-    <div class="time">${cityTime.format("h:mm:ss")} <small>${cityTime.format(
-    "A"
-  )}</small></div>
-  </div>
-  <a href="/">All cities</a>
-  `;
+
+  if (citiesElement) {
+    // Create city container
+    const cityDiv = document.createElement("div");
+    cityDiv.className = "city";
+    cityDiv.id = cityId;
+
+    // Create inner HTML structure
+    cityDiv.innerHTML = `
+      <div>
+        <h2>${cityName}</h2>
+        <div class="date">${cityTime.format("dddd, MMMM Do YYYY")}</div>
+      </div>
+      <div class="time">${cityTime.format("h:mm:ss")} <small>${cityTime.format("A")}</small></div>
+    `;
+
+    // Append to cities container
+    citiesElement.appendChild(cityDiv);
+  } else {
+    console.warn('Could not find the #cities element in the DOM.');
+  }
 }
 
 updateTime();
 setInterval(updateTime, 1000);
 
 let citiesSelectElement = document.querySelector("#city");
-citiesSelectElement.addEventListener("change", updateCity);
+if (citiesSelectElement) {
+  citiesSelectElement.addEventListener("change", updateCity);
+}
