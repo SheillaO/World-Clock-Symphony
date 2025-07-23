@@ -45,34 +45,43 @@ function updateCity(event) {
 
   let cityTime = moment().tz(cityTimeZone);
   let citiesElement = document.querySelector("#cities");
-  citiesElement.innerHTML = `
+  citiesElement.innerHTML += `
   <div class="city">
     <div>
       <h2>${cityName}</h2>
       <div class="date">${cityTime.format("MMMM Do YYYY")}</div>
     </div>
-    <div class="time">${cityTime.format(
-      "h:mm:ss"
-    )} <small>${cityTime.format("A")}</small></div>
+    <div class="time">${cityTime.format("h:mm:ss")} <small>${cityTime.format(
+    "A"
+  )}</small></div>
   </div>
+  `;
+}
 
-  <a href="/"><All Cities</a>
+function updateCity(event) {
+  let cityTimeZone = event.target.value;
+  if (cityTimeZone === "current") {
+    cityTimeZone = moment.tz.guess();
+  }
+  let cityName = cityTimeZone.replace("_", " ").split("/")[1];
+  let cityTime = moment().tz(cityTimeZone);
+  let citiesElement = document.querySelector("#cities");
+  citiesElement.innerHTML = `
+  <div class="city">
+    <div>
+      <h2>${cityName}</h2>
+      <div class="date">${cityTime.format("MMMM	Do YYYY")}</div>
+    </div>
+    <div class="time">${cityTime.format("h:mm:ss")} <small>${cityTime.format(
+    "A"
+  )}</small></div>
+  </div>
+  <a href="/">All cities</a>
   `;
 }
 
 updateTime();
 setInterval(updateTime, 1000);
 
-// Run selected city clock if selected
-clearInterval(window.selectedCityClock);
-window.selectedCityClock = setInterval(() => {
-  if (window.selectedTimeZone) {
-    updateCity({ target: { value: window.selectedTimeZone } });
-  }
-}, 1000);
-
-// Dropdown listener
 let citiesSelectElement = document.querySelector("#city");
-if (citiesSelectElement) {
-  citiesSelectElement.addEventListener("change", updateCity);
-}
+citiesSelectElement.addEventListener("change", updateCity);
