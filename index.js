@@ -41,12 +41,15 @@ function updateCity(event) {
   if (selectedCityTimeZone === "current") {
     selectedCityTimeZone = moment.tz.guess();
   }
+
+  const cityName = getCityNameFromTimezone(selectedCityTimeZone);
+  handleCitySelection(cityName); // ⬅️ Trigger background video update
 }
 
 function updateSelectedCityTime() {
   if (selectedCityTimeZone) {
     let cityTime = moment().tz(selectedCityTimeZone);
-    let cityName = selectedCityTimeZone.split("/")[1].replace("_", " ");
+    let cityName = getCityNameFromTimezone(selectedCityTimeZone);
     let citiesElement = document.querySelector("#cities");
 
     citiesElement.innerHTML = `
@@ -63,6 +66,10 @@ function updateSelectedCityTime() {
   }
 }
 
+function getCityNameFromTimezone(timezone) {
+  const parts = timezone.split("/");
+  return parts.length > 1 ? parts[1].replace("_", " ") : timezone;
+}
 
 // -------------------------
 // ⏰ Start the Clock
@@ -83,25 +90,48 @@ setInterval(updateAll, 1000);
 let citiesSelectElement = document.querySelector("#city");
 citiesSelectElement.addEventListener("change", updateCity);
 
+// -------------------------
+// 🌍 City to Continent Map
+// -------------------------
 
-  const videoElement = document.getElementById("bg-video");
-  const sourceElement = videoElement.querySelector("source");
+const cityToContinent = {
+  Nairobi: "Africa",
+  Tokyo: "Asia",
+  "New York": "America",
+  Berlin: "Europe",
+  Sydney: "Australia",
+  London: "Europe",
+  Johannesburg: "Africa",
+};
 
-  const videos = [
-    "media/Africa.mp4",
-    "media/Asia.mp4",
-    "media/America.mp4",
-    "media/Australia.mp4",
-    "media/Europe.mp4"
-  ];
+// -------------------------
+// 🎥 Background Video Logic
+// -------------------------
 
-  let currentIndex = 0;
+function changeBackgroundVideo(continent) {
+  const video = document.getElementById("bg-video");
+  const source = document.getElementById("video-source");
 
-  function changeVideo() {
-    currentIndex = (currentIndex + 1) % videos.length;
-    sourceElement.src = videos[currentIndex];
-    videoElement.load(); // reload the video with new source
-    videoElement.play(); // ensure it plays again
+  if (!video || !source) return;
+
+  const newSrc = `media/${continent}.mp4`;
+
+  // Only update if the video is different
+  if (!source.src.includes(`${continent}.mp4`)) {
+    video.pause();
+    source.src = newSrc;
+    video.load();
+    video.play();
   }
+}
 
-  setInterval(changeVideo, 10000); // 20 seconds
+// -------------------------
+// 🏙️ City Selection Trigger
+// -------------------------
+
+function handleCitySelection(cityName) {
+  const continent = cityToContinent[cityName];
+  if (continent) {
+    changeBackgroundVideo(continent);
+  }
+}
