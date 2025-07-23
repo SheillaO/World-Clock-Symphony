@@ -69,6 +69,7 @@ select:focus {
 
 .city {
   transition: transform 0.2s, background-color 0.2s;
+   transition: background 1s ease, color 1s ease;
 }
 
 .city:hover {
@@ -94,6 +95,16 @@ select:focus {
   vertical-align: top;
   margin-left: 6px;
   color: #888;
+}
+
+.day {
+  background: linear-gradient(to top, #fceabb, #f8b500, #f7d794); /* warm golden daylight */
+  color: #1a1a1a;
+}
+
+.night {
+  background: linear-gradient(to top, #0f2027, #2c5364, #1c1c2d); /* deep twilight with navy tones */
+  color: #f1f1f1;
 }
 
 footer {

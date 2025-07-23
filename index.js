@@ -152,3 +152,32 @@ function getWeather(cityName, cityId) {
 // Initial weather load
 getWeather("Nairobi", "nairobi");
 getWeather("Berlin", "berlin");
+
+
+
+function getTimezoneFromCityId(cityId) {
+  return cityId.replace(/-/g, "/");
+}
+
+function applyDayNightClasses() {
+  const cityElements = document.querySelectorAll(".city");
+
+  cityElements.forEach((cityElement) => {
+    const cityId = cityElement.id;
+    const cityTimezone = getTimezoneFromCityId(cityId);
+    const time = moment().tz(cityTimezone);
+    const hour = time.hour();
+
+    cityElement.classList.remove("day", "night");
+
+    if (hour >= 6 && hour < 18) {
+      cityElement.classList.add("day");
+    } else {
+      cityElement.classList.add("night");
+    }
+  });
+}
+
+// Call on load and continuously every 5 minutes
+applyDayNightClasses();
+setInterval(applyDayNightClasses, 5 * 60 * 1000);
