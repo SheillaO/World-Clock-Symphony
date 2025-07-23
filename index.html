@@ -18,53 +18,45 @@
 </head>
 
 <body>
+
+  <video autoplay muted loop id="bg-video">
+<source src="media/Africa.mp4" type="video/mp4" />
+    Your browser does not support HTML5 video.
+  </video>
+
+
+<div class="video-overlay"></div>
+
     <div class="container">
         <h1>World Clock Symphony</h1>
 
         <select id="city">
             <option value="">Choose a City ....</option>
-            <option value="current">My Current Location 🌍</option>
-            <option value="America/New_York">New York 🗽</option>
-            <option value="Europe/London">London 💂‍♂️</option>
-            <option value="Asia/Tokyo">Tokyo 🍣</option>
-            <option value="Australia/Sydney">Sydney 🌏</option>
-            <option value="Africa/Johannesburg">Johannesburg 🌍</option>
+            <option value="current">My Current Location</option>
+            <option value="America/New_York">New York</option>
+            <option value="Europe/London">London</option>
+            <option value="Asia/Tokyo">Tokyo</option>
+            <option value="Australia/Sydney">Sydney</option>
+            <option value="Africa/Johannesburg">Johannesburg</option>
         </select>
 
         <div id="cities">
             <div class="city" id="nairobi">
                 <div>
-                    <h2>Nairobi 💹</h2>
+                    <h2>Nairobi</h2>
                     <div class="date"></div>
                 </div>
                 <div class="time"></div>
-                <div class="weather-info">
-                    <div class="temperature"></div>
-                    <div class="humidity"></div>
-                    <div class="wind-speed"></div>
-                    <div class="icon"></div>
-                </div>
             </div>
-
             <div class="city" id="berlin">
                 <div>
-                    <h2>Berlin 🍻🏞️</h2>
+                    <h2>Berlin</h2>
                     <div class="date"></div>
                 </div>
                 <div class="time"></div>
-                <div class="weather-info">
-                    <div class="temperature"></div>
-                    <div class="humidity"></div>
-                    <div class="wind-speed"></div>
-                    <div class="icon"></div>
-                </div>
             </div>
         </div>
-
-        <div id="selected-city">
-            <div class="city"></div>
         </div>
-    </div>
 
     <footer>
         <p>
@@ -76,7 +68,7 @@
                 rel="noopener noreferrer"> Netlify </a>.
         </p>
     </footer>
-    <button id="theme-toggle">Toggle Theme</button>
+
 
     <script src="index.js"></script>
 
