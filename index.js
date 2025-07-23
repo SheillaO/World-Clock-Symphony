@@ -70,7 +70,9 @@ function updateCity(event) {
     return;
   }
 
-  let cityName = cityTimeZone.split("/").pop().replace(/_/g, " ");
+  // ✅ Get full name + emoji from selected option
+  let cityName = event.target.options[event.target.selectedIndex].text;
+
   let cityTime = moment().tz(cityTimeZone);
   let citiesElement = document.querySelector("#cities");
 
@@ -79,24 +81,27 @@ function updateCity(event) {
     cityDiv.className = "city";
     cityDiv.id = cityId;
 
-    // ✅ Use template literal with backticks
     cityDiv.innerHTML = `
       <div>
         <h2>${cityName}</h2>
         <div class="date">${cityTime.format("dddd, MMMM Do YYYY")}</div>
+      </div>
+      <div class="time">${cityTime.format("h:mm:ss")} <small>${cityTime.format(
+      "A"
+    )}</small></div>
+      <div class="weather-info">
         <div class="temperature"></div>
         <div class="humidity"></div>
         <div class="wind-speed"></div>
         <div class="icon"></div>
       </div>
-      <div class="time">${cityTime.format("h:mm:ss")} <small>${cityTime.format(
-      "A"
-    )}</small></div>
     `;
 
     citiesElement.appendChild(cityDiv);
 
-    getWeather(cityName, cityId);
+    // ✅ Clean emoji before using cityName in API call
+    const cleanCityName = cityName.replace(/[^a-zA-Z\s]/g, "").trim();
+    getWeather(cleanCityName, cityId);
   } else {
     console.warn("Could not find the #cities element in the DOM.");
   }
@@ -111,7 +116,6 @@ if (citiesSelectElement) {
 }
 
 function displayWeather(cityId, response) {
-  // ✅ Fix missing string quotes in selector
   const cityElement = document.querySelector(`#${cityId}`);
   if (!cityElement) return;
 
@@ -125,7 +129,6 @@ function displayWeather(cityId, response) {
   const windSpeed = Math.round(response.data.wind.speed);
   const iconUrl = response.data.condition.icon_url;
 
-  // ✅ Fix incorrect template literals
   if (tempEl) tempEl.textContent = `🌡️ ${temperature}°C`;
   if (humidityEl) humidityEl.textContent = `💧 ${humidity}%`;
   if (windEl) windEl.textContent = `💨 ${windSpeed} km/h`;
