@@ -123,7 +123,7 @@ function displayWeather(cityId, response) {
   if (windEl) windEl.textContent = `💨 ${windSpeed} km/h`;
   if (iconEl) {
     iconEl.innerHTML = `<img src="${iconUrl}" alt="Weather icon" />`;
-    // 🔥 Add condition-based class for animation
+    iconEl.classList.remove("sunny", "rainy"); // Clear previous animation class
     if (condition.includes("sun")) {
       iconEl.classList.add("sunny");
     } else if (condition.includes("rain")) {
