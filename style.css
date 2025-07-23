@@ -1,4 +1,14 @@
 body {
+  /* 🌞 Day Mode */
+  --accent-light: #6C63FF;   /* Elegant lavender blue */
+  --bg-day: linear-gradient(to top, #e0eaff, #f5f7ff);
+  --text-day: #2c2c54;
+
+  /* 🌙 Night Mode */
+  --accent-dark: #FF6584;    /* Coral pink */
+  --bg-night: linear-gradient(to top, #1e1e2f, #2c2c54);
+  --text-night: #f4f4fb;
+
   background-color: #f4f4fb;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: #333;
@@ -7,22 +17,24 @@ body {
   padding: 0;
 }
 
+/* Typography */
 h1 {
   text-align: center;
   font-size: 36px;
-  color: #2d2d5a;
+  color: #2c2c54;
   margin-top: 40px;
   margin-bottom: 20px;
-  font-weight: 700;
+  font-weight: 600;
+  letter-spacing: 1px;
 }
 
 h2 {
-  margin: 0 0 5px;
-  font-size: 26px;
-  color: #444;
-  font-weight: 600;
+  font-size: 24px;
+  font-weight: 500;
+  color: #3a3a5a;
 }
 
+/* Select Menu */
 select {
   display: block;
   width: 100%;
@@ -40,6 +52,7 @@ select:focus {
   box-shadow: 0 0 5px rgba(122, 111, 240, 0.3);
 }
 
+/* Container */
 .container {
   max-width: 600px;
   margin: 60px auto;
@@ -54,6 +67,7 @@ select:focus {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
+/* City Cards */
 .city {
   display: flex;
   justify-content: space-between;
@@ -61,15 +75,11 @@ select:focus {
   margin: 20px 0;
   padding: 25px 0;
   border-bottom: 1px dashed rgba(0, 0, 0, 0.15);
+  transition: background 1s ease, color 1s ease;
 }
 
 .city:last-child {
   border-bottom: none;
-}
-
-.city {
-  transition: transform 0.2s, background-color 0.2s;
-   transition: background 1s ease, color 1s ease;
 }
 
 .city:hover {
@@ -78,11 +88,26 @@ select:focus {
   border-radius: 8px;
 }
 
-.date {
-  font-size: 14px;
-  color: #888;
+/* Day/Night Theming */
+.city.day {
+  background: var(--bg-day);
+  color: var(--text-day);
 }
 
+.city.night {
+  background: var(--bg-night);
+  color: var(--text-night);
+}
+
+.city.day .time {
+  border-bottom: 2px solid var(--accent-light);
+}
+
+.city.night .time {
+  border-bottom: 2px solid var(--accent-dark);
+}
+
+/* Time & Date */
 .time {
   font-size: 46px;
   font-weight: bold;
@@ -97,16 +122,12 @@ select:focus {
   color: #888;
 }
 
-.day {
-  background: linear-gradient(to top, #fceabb, #f8b500, #f7d794); /* warm golden daylight */
-  color: #1a1a1a;
+.date {
+  font-size: 14px;
+  color: #888;
 }
 
-.night {
-  background: linear-gradient(to top, #0f2027, #2c5364, #1c1c2d); /* deep twilight with navy tones */
-  color: #f1f1f1;
-}
-
+/* Footer */
 footer {
   text-align: center;
   font-size: 16px;

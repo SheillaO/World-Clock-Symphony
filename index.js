@@ -99,6 +99,9 @@ function updateCity(event) {
 
     citiesElement.appendChild(cityDiv);
 
+    // 🔥 Apply day/night theme for new city
+    applyDayNightClasses();
+
     // ✅ Clean emoji before using cityName in API call
     const cleanCityName = cityName.replace(/[^a-zA-Z\s]/g, "").trim();
     getWeather(cleanCityName, cityId);
