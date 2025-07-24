@@ -283,3 +283,4 @@ fetchWeather("Berlin", "berlin");
 setInterval(updateTime, 1000);
 
 document.querySelector("#city").addEventListener("change", updateSelectedCity);
+
