@@ -444,11 +444,14 @@ showTrack(randomSong);
 
 const bird = document.querySelector(".flying-bird");
 
-function randomPosition() {
+function moveBird() {
   const x = Math.random() * window.innerWidth;
   const y = Math.random() * window.innerHeight;
+  bird.style.transition = "transform 8s ease-in-out";
   bird.style.transform = `translate(${x}px, ${y}px)`;
 }
 
-// Move the bird every 1.2 seconds
-setInterval(randomPosition, 10);
+// Move the bird every 15 seconds
+setInterval(moveBird, 15000);
+moveBird(); // Start immediately
+
