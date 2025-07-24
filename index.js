@@ -334,22 +334,27 @@ function updateSelectedCity(event) {
   }
 
   const newCityCard = `
-    <div class="city-card" id="selected-city" data-timezone="${cityTimeZone}" data-cityname="${cityName}">
-      <div class="city-header">
-        <h2>${cityName}</h2>
-        <div class="date">${cityTime.format("MMMM Do YYYY")}</div>
-      </div>
+  <div class="city-card" id="selected-city" data-timezone="${cityTimeZone}" data-cityname="${cityName}">
+    <div class="left-section">
+      <h2>${cityName}</h2>
+      <div class="date">${cityTime.format("MMMM Do YYYY")}</div>
+      <div class="cultural-greeting">${culturalGreeting}</div>
+      ${businessInfo}
+    </div>
+    <div class="center-section">
       <div class="time">
         ${cityTime.format("h:mm:ss")} <small>${cityTime.format("A")}</small>
         <br><small style="font-size: 16px; color: #666;">${dayNight}</small>
         <br><small style="font-size: 14px; color: #777;">${marketStatus}</small>
         <br><small style="font-size: 14px; color: #ff6b6b;">${funReaction}</small>
       </div>
-      <div class="weather">Loading weather...</div>
-      <div class="cultural-greeting">${culturalGreeting}</div>
-      ${businessInfo}
     </div>
-  `;
+    <div class="right-section">
+      <div class="weather">Loading weather...</div>
+    </div>
+  </div>
+`;
+
 
   const citiesElement = document.querySelector("#cities");
   citiesElement.insertAdjacentHTML("beforeend", newCityCard);
@@ -359,18 +364,23 @@ function updateSelectedCity(event) {
 
 // Initial calls - Add business info to default cities
 document.addEventListener("DOMContentLoaded", function () {
-  // Add business info to Nairobi card
   const nairobiCard = document.querySelector("#nairobi");
   if (nairobiCard) {
-    nairobiCard.insertAdjacentHTML("beforeend", createBusinessInfo("Nairobi"));
+    const greeting = nairobiCard.querySelector(".cultural-greeting");
+    if (greeting) {
+      greeting.insertAdjacentHTML("afterend", createBusinessInfo("Nairobi"));
+    }
   }
 
-  // Add business info to Berlin card
   const berlinCard = document.querySelector("#berlin");
   if (berlinCard) {
-    berlinCard.insertAdjacentHTML("beforeend", createBusinessInfo("Berlin"));
+    const greeting = berlinCard.querySelector(".cultural-greeting");
+    if (greeting) {
+      greeting.insertAdjacentHTML("afterend", createBusinessInfo("Berlin"));
+    }
   }
 });
+
 
 updateTime();
 fetchWeather("Nairobi", "nairobi");
