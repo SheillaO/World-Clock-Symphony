@@ -33,7 +33,7 @@ Dark/Light themes + curated Spotify soundtrack
 // Cultural intelligence built-in
 function getCulturalGreeting(momentTime, cityName) {
   const hour = momentTime.hour();
-  return hour >= 6 && hour < 12 ? greetings.morning : greetings.evening;
+  return hour >= 6 hour < 12 ? greetings.morning : greetings.evening;
 }
 
 // Business-aware time coordination
