@@ -36,29 +36,36 @@
         <lottie-player src="https://lottie.host/977cc134-99fe-43a8-bd97-1f0bf5570746/qhKYQJIPIp.json"
             background="transparent" speed="1" style="width: 40%; height: 40%;" loop autoplay></lottie-player>
     </div>
+   
 
     <div class="main-container">
-<header>
-    <div class="header-content">
-        <h1>World Clock Symphony</h1>
-
-        <div class="header-right">
-            <button class="theme-toggle" id="theme-toggle">
-                <span class="theme-icon">🌙</span>
-                <span class="theme-text">Dark Mode</span>
-            </button>
-
-        <div class="spotify-embed">
-            <iframe class="spotify-embed" style="border-radius:12px"
-                src="https://open.spotify.com/embed/playlist/09Vv4QLoOWadCCo1twJvtu?utm_source=generator&theme=0&transparent=1"
-                width="100%" height="152" frameBorder="0"
-                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy">
-            </iframe>
-        </div>
-            </div>
-    </div>
-</header>
         
+        <header>
+            <div class="header-content">
+                <h1>World Clock Symphony</h1>
+        
+                <div class="header-controls">
+                    <div class="control-group">
+                        <button class="theme-toggle" id="theme-toggle">
+                            <span class="theme-icon">🌙</span>
+                            <span class="theme-text">Dark Mode</span>
+                        </button>
+        
+                        <button id="meeting-mode-toggle" class="meeting-planner-btn">
+                            📅 Meeting Planner
+                        </button>
+                    </div>
+        
+                    <div class="spotify-embed">
+                        <iframe class="spotify-embed" style="border-radius:12px"
+                            src="https://open.spotify.com/embed/playlist/09Vv4QLoOWadCCo1twJvtu?utm_source=generator&theme=0&transparent=1"
+                            width="100%" height="152" frameBorder="0"
+                            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </header>
 
         <section class="controls">
             <label for="city">Choose a City:</label>
@@ -71,6 +78,10 @@
                 <option value="Australia/Sydney">Sydney</option>
                 <option value="Africa/Johannesburg">Johannesburg</option>
             </select>
+
+           
+          
+
         </section>
 
         <section id="cities">
@@ -98,19 +109,19 @@
             <div class="city-card" id="selected-city"></div>
 
         </section>
-    
-        </div>
 
-       
-        <footer>
-            <p>
-                Built with ❤️ by Olga Sheilla — Open-sourced on
-                <a href="https://github.com/SheillaO/World-Clock-Symphony" target="_blank">GitHub</a>
-                & hosted on
-                <a href="https://worldclocksymphony.netlify.app/" target="_blank">Netlify</a>
-            </p>
-        </footer>
-  
+    </div>
+
+
+    <footer>
+        <p>
+            Built with ❤️ by Olga Sheilla — Open-sourced on
+            <a href="https://github.com/SheillaO/World-Clock-Symphony" target="_blank">GitHub</a>
+            & hosted on
+            <a href="https://worldclocksymphony.netlify.app/" target="_blank">Netlify</a>
+        </p>
+    </footer>
+
 
     <script src="index.js"></script>
 </body>

@@ -455,3 +455,65 @@ function moveBird() {
 setInterval(moveBird, 15000);
 moveBird(); // Start immediately
 
+
+// Add this function
+// Meeting Planner Helper Function
+function quickMeetingHelper() {
+  const cities = document.querySelectorAll('.city-card h2');
+  
+  let suggestion = "🕐 Best meeting times (UTC):\n\n";
+  
+  // Super basic logic - find when most cities are 9AM-5PM
+  for(let hour = 0; hour < 24; hour++) {
+    let businessHourCount = 0;
+    let cityDetails = [];
+    
+    cities.forEach((cityElement) => {
+      const cityName = cityElement.textContent;
+      const tz = getTimezoneFromCity(cityName);
+      if (tz) {
+        const cityTime = moment().utc().hour(hour).tz(tz);
+        const cityHour = cityTime.hour();
+        
+        if(cityHour >= 9 && cityHour <= 17) {
+          businessHourCount++;
+        }
+        cityDetails.push(`${cityName}: ${cityTime.format('h:mm A')}`);
+      }
+    });
+    
+    if(businessHourCount >= Math.max(1, cities.length - 1)) {
+      suggestion += `⏰ ${hour}:00 UTC\n`;
+      suggestion += cityDetails.join('\n') + '\n\n';
+    }
+  }
+  
+  if (suggestion === "🕐 Best meeting times (UTC):\n\n") {
+    suggestion = "❌ No ideal overlap found.\nConsider async communication or split meetings.";
+  }
+  
+  alert(suggestion);
+}
+
+// Helper function to map city names to timezones
+function getTimezoneFromCity(cityName) {
+  const cityToTimezone = {
+    'Nairobi': 'Africa/Nairobi',
+    'Berlin': 'Europe/Berlin', 
+    'New York': 'America/New_York',
+    'London': 'Europe/London',
+    'Tokyo': 'Asia/Tokyo',
+    'Sydney': 'Australia/Sydney',
+    'Johannesburg': 'Africa/Johannesburg'
+  };
+  return cityToTimezone[cityName];
+}
+
+// Add event listener for the meeting planner button
+// (Add this to your existing DOMContentLoaded event listener, or create a new one)
+document.addEventListener('DOMContentLoaded', function() {
+  // Your existing DOMContentLoaded code stays here...
+  
+  // ADD THIS LINE to your existing event listener
+  document.getElementById('meeting-mode-toggle').addEventListener('click', quickMeetingHelper);
+});
