@@ -1,3 +1,9 @@
+
+
+<img width="1533" height="836" alt="World Clock Symphony  Image" src="https://github.com/user-attachments/assets/406b5d29-7966-4cf2-8822-c3ad0ac39f45" />
+
+
+
 🎵 The Vision
 In our hyper-connected world, time isn't just numbers—it's about human connection across continents. World Clock Symphony transforms mundane time-checking into a rich cultural experience celebrating our global community.
 Why "Symphony"? Like a symphony harmonizes instruments into music, this app harmonizes time zones into a cohesive experience where each city plays its own "note" in the grand composition of global business and life.
