@@ -15,21 +15,43 @@
     <link
         href="https://fonts.googleapis.com/css2?family=PT+Mono&family=Poppins&family=Roboto:wght@300;400;700&display=swap"
         rel="stylesheet" />
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+
 </head>
-<audio id="tick-sound" preload="auto">
-    <img src="https://www.soundjay.com/misc/sounds/clock-ticking-1.wav" type="audio/wav">
-</audio>
+
 <body>
+    <audio id="tick-sound" preload="auto">
+        <img src="https://www.soundjay.com/misc/sounds/clock-ticking-1.wav" type="audio/wav">
+    </audio>
+<div class="flying-bird">
+    <lottie-player src="https://lottie.host/977cc134-99fe-43a8-bd97-1f0bf5570746/qhKYQJIPIp.json"
+        background="transparent" speed="1" style="width: 40%; height: 40%;" loop autoplay>
+    </lottie-player>
+</div>
+
     <div class="main-container">
-        <header>
-            <div class="header-content">
-                <h1>World Clock Symphony</h1>
-                <button class="theme-toggle" id="theme-toggle">
-                    <span class="theme-icon">🌙</span>
-                    <span class="theme-text">Dark Mode</span>
-                </button>
+<header>
+    <div class="header-content">
+        <h1>World Clock Symphony</h1>
+
+        <div class="header-right">
+            <button class="theme-toggle" id="theme-toggle">
+                <span class="theme-icon">🌙</span>
+                <span class="theme-text">Dark Mode</span>
+            </button>
+
+        <div class="spotify-embed">
+            <iframe class="spotify-embed" style="border-radius:12px"
+                src="https://open.spotify.com/embed/playlist/09Vv4QLoOWadCCo1twJvtu?utm_source=generator&theme=0&transparent=1"
+                width="100%" height="152" frameBorder="0"
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy">
+            </iframe>
+        </div>
             </div>
-        </header>
+    </div>
+</header>
+        
 
         <section class="controls">
             <label for="city">Choose a City:</label>
@@ -67,11 +89,12 @@
 
             <!-- Selected city info will appear here dynamically -->
             <div class="city-card" id="selected-city"></div>
-           
 
         </section>
+    
         </div>
 
+       
         <footer>
             <p>
                 Built with ❤️ by Olga Sheilla — Open-sourced on

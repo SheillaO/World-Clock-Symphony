@@ -333,35 +333,35 @@ function updateSelectedCity(event) {
     existingSelected.remove();
   }
 
+  // Use the SAME structure as Nairobi and Berlin
   const newCityCard = `
   <div class="city-card" id="selected-city" data-timezone="${cityTimeZone}" data-cityname="${cityName}">
-    <div class="left-section">
+    <div class="city-header">
       <h2>${cityName}</h2>
       <div class="date">${cityTime.format("MMMM Do YYYY")}</div>
-      <div class="cultural-greeting">${culturalGreeting}</div>
-      ${businessInfo}
     </div>
-    <div class="center-section">
-      <div class="time">
-        ${cityTime.format("h:mm:ss")} <small>${cityTime.format("A")}</small>
-        <br><small style="font-size: 16px; color: #666;">${dayNight}</small>
-        <br><small style="font-size: 14px; color: #777;">${marketStatus}</small>
-        <br><small style="font-size: 14px; color: #ff6b6b;">${funReaction}</small>
-      </div>
+    <div class="time">
+      ${cityTime.format("h:mm:ss")} <small>${cityTime.format("A")}</small>
+      <br><small style="font-size: 16px; color: #666;">${dayNight}</small>
+      <br><small style="font-size: 14px; color: #777;">${marketStatus}</small>
+      <br><small style="font-size: 14px; color: #ff6b6b;">${funReaction}</small>
     </div>
-    <div class="right-section">
-      <div class="weather">Loading weather...</div>
-    </div>
+    <div class="cultural-greeting">${culturalGreeting}</div>
+    <div class="weather">Loading weather...</div>
   </div>
 `;
-
 
   const citiesElement = document.querySelector("#cities");
   citiesElement.insertAdjacentHTML("beforeend", newCityCard);
 
+  // Add business info after the greeting (same as Nairobi and Berlin)
+  const greeting = document.querySelector("#selected-city .cultural-greeting");
+  if (greeting && businessInfo) {
+    greeting.insertAdjacentHTML("afterend", businessInfo);
+  }
+
   fetchWeather(cityName, "selected-city");
 }
-
 // Initial calls - Add business info to default cities
 document.addEventListener("DOMContentLoaded", function () {
   const nairobiCard = document.querySelector("#nairobi");
@@ -381,7 +381,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-
 updateTime();
 fetchWeather("Nairobi", "nairobi");
 fetchWeather("Berlin", "berlin");
@@ -390,3 +389,66 @@ initThemeToggle(); // Initialize theme toggle
 setInterval(updateTime, 1000);
 
 document.querySelector("#city").addEventListener("change", updateSelectedCity);
+
+const clientId = "7cf0f53647d34acd967f205ebb01c51c";
+const clientSecret = "cc1f3903f3214178abef218a5b027599";
+
+async function getAccessToken() {
+  const result = await fetch("https://accounts.spotify.com/api/token", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      Authorization: "Basic " + btoa(clientId + ":" + clientSecret),
+    },
+    body: "grant_type=client_credentials",
+  });
+
+  const data = await result.json();
+  return data.access_token;
+}
+
+async function showTrack(query) {
+  const token = await getAccessToken();
+
+  const search = await fetch(
+    `https://api.spotify.com/v1/search?q=${encodeURIComponent(
+      query
+    )}&type=track&limit=1`,
+    {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    }
+  );
+
+  const data = await search.json();
+  const track = data.tracks.items[0];
+
+  if (track) {
+    const embed = `
+      <iframe src="https://open.spotify.com/embed/track/${track.id}" 
+              width="300" height="80" frameborder="0" 
+              allowtransparency="true" allow="encrypted-media"></iframe>
+    `;
+    document.getElementById("spotify-player").innerHTML = embed;
+  }
+}
+
+const sautiSongs = [
+  "Sauti Sol Melanin",
+  "Sauti Sol Suzanna",
+  "Sauti Sol Midnight Train",
+];
+const randomSong = sautiSongs[Math.floor(Math.random() * sautiSongs.length)];
+showTrack(randomSong);
+
+const bird = document.querySelector(".flying-bird");
+
+function randomPosition() {
+  const x = Math.random() * window.innerWidth;
+  const y = Math.random() * window.innerHeight;
+  bird.style.transform = `translate(${x}px, ${y}px)`;
+}
+
+// Move the bird every 1.2 seconds
+setInterval(randomPosition, 10);
