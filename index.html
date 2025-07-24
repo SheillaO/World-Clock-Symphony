@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<!DOCTYPE html>
-<html lang="en">
-
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -23,7 +20,13 @@
 <body>
     <div class="main-container">
         <header>
-            <h1>World Clock Symphony</h1>
+            <div class="header-content">
+                <h1>World Clock Symphony</h1>
+                <button class="theme-toggle" id="theme-toggle">
+                    <span class="theme-icon">🌙</span>
+                    <span class="theme-text">Dark Mode</span>
+                </button>
+            </div>
         </header>
 
         <section class="controls">
@@ -47,6 +50,7 @@
                 </div>
                 <div class="time"></div>
                 <div class="weather"></div>
+                <div class="cultural-greeting"></div>
             </div>
 
             <div class="city-card" id="berlin">
@@ -56,6 +60,7 @@
                 </div>
                 <div class="time"></div>
                 <div class="weather"></div>
+                <div class="cultural-greeting"></div>
             </div>
 
             <!-- Selected city info will appear here dynamically -->

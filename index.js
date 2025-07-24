@@ -1,4 +1,86 @@
-// 🏢 Business and market information for each city
+// 🌍 Cultural greetings for different cities and times
+const culturalGreetings = {
+  Nairobi: {
+    morning: "Habari za asubuhi! 🌅", // Good morning in Swahili
+    afternoon: "Habari za mchana! ☀️", // Good afternoon
+    evening: "Habari za jioni! 🌆", // Good evening
+    night: "Usiku mwema! 🌙", // Good night
+  },
+  Berlin: {
+    morning: "Guten Morgen! 🌅", // Good morning in German
+    afternoon: "Guten Tag! ☀️", // Good afternoon
+    evening: "Guten Abend! 🌆", // Good evening
+    night: "Gute Nacht! 🌙", // Good night
+  },
+  "New York": {
+    morning: "Good morning! 🌅",
+    afternoon: "Good afternoon! ☀️",
+    evening: "Good evening! 🌆",
+    night: "Good night! 🌙",
+  },
+  London: {
+    morning: "Good morning! 🌅",
+    afternoon: "Good afternoon! ☀️",
+    evening: "Good evening! 🌆",
+    night: "Good night! 🌙",
+  },
+  Tokyo: {
+    morning: "Ohayou gozaimasu! 🌅", // Good morning in Japanese
+    afternoon: "Konnichiwa! ☀️", // Good afternoon
+    evening: "Konbanwa! 🌆", // Good evening
+    night: "Oyasumi! 🌙", // Good night
+  },
+  Sydney: {
+    morning: "G'day mate! 🌅", // Australian greeting
+    afternoon: "Good arvo! ☀️", // Good afternoon
+    evening: "Good evening! 🌆",
+    night: "Good night! 🌙",
+  },
+  Johannesburg: {
+    morning: "Goeie môre! 🌅", // Good morning in Afrikaans
+    afternoon: "Goeie middag! ☀️", // Good afternoon
+    evening: "Goeie aand! 🌆", // Good evening
+    night: "Goeie nag! 🌙", // Good night
+  },
+};
+
+// 🎨 Theme toggle functionality
+function initThemeToggle() {
+  const themeToggle = document.getElementById("theme-toggle");
+  const body = document.body;
+  const themeIcon = document.querySelector(".theme-icon");
+  const themeText = document.querySelector(".theme-text");
+
+  themeToggle.addEventListener("click", () => {
+    body.classList.toggle("dark-theme");
+
+    if (body.classList.contains("dark-theme")) {
+      themeIcon.textContent = "☀️";
+      themeText.textContent = "Light Mode";
+    } else {
+      themeIcon.textContent = "🌙";
+      themeText.textContent = "Dark Mode";
+    }
+  });
+}
+
+// 🗣️ Get cultural greeting based on time and city
+function getCulturalGreeting(momentTime, cityName) {
+  const greetings = culturalGreetings[cityName];
+  if (!greetings) return "";
+
+  const hour = momentTime.hour();
+
+  if (hour >= 6 && hour < 12) {
+    return greetings.morning;
+  } else if (hour >= 12 && hour < 18) {
+    return greetings.afternoon;
+  } else if (hour >= 18 && hour < 22) {
+    return greetings.evening;
+  } else {
+    return greetings.night;
+  }
+}
 const cityBusinessInfo = {
   Nairobi: {
     currency: "KSH (Kenyan Shilling)",
@@ -131,6 +213,7 @@ function updateTime() {
   if (nairobi) {
     const nairobiDate = nairobi.querySelector(".date");
     const nairobiTime = nairobi.querySelector(".time");
+    const nairobiGreeting = nairobi.querySelector(".cultural-greeting");
     const time = moment().tz("Africa/Nairobi");
 
     nairobiDate.innerHTML = time.format("MMMM Do YYYY");
@@ -138,6 +221,7 @@ function updateTime() {
     const dayNight = getDayNightIndicator(time);
     const marketStatus = getMarketStatus(time, "Nairobi");
     const funReaction = getFunTimeReaction(time);
+    const culturalGreeting = getCulturalGreeting(time, "Nairobi");
 
     nairobiTime.innerHTML = `
       ${time.format("h:mm:ss")} <small>${time.format("A")}</small>
@@ -145,6 +229,10 @@ function updateTime() {
       <br><small style="font-size: 14px; color: #777;">${marketStatus}</small>
       <br><small style="font-size: 14px; color: #ff6b6b;">${funReaction}</small>
     `;
+
+    if (nairobiGreeting) {
+      nairobiGreeting.innerHTML = culturalGreeting;
+    }
   }
 
   // Berlin
@@ -152,6 +240,7 @@ function updateTime() {
   if (berlin) {
     const berlinDate = berlin.querySelector(".date");
     const berlinTime = berlin.querySelector(".time");
+    const berlinGreeting = berlin.querySelector(".cultural-greeting");
     const time = moment().tz("Europe/Berlin");
 
     berlinDate.innerHTML = time.format("MMMM Do YYYY");
@@ -159,6 +248,7 @@ function updateTime() {
     const dayNight = getDayNightIndicator(time);
     const marketStatus = getMarketStatus(time, "Berlin");
     const funReaction = getFunTimeReaction(time);
+    const culturalGreeting = getCulturalGreeting(time, "Berlin");
 
     berlinTime.innerHTML = `
       ${time.format("h:mm:ss")} <small>${time.format("A")}</small>
@@ -166,6 +256,10 @@ function updateTime() {
       <br><small style="font-size: 14px; color: #777;">${marketStatus}</small>
       <br><small style="font-size: 14px; color: #ff6b6b;">${funReaction}</small>
     `;
+
+    if (berlinGreeting) {
+      berlinGreeting.innerHTML = culturalGreeting;
+    }
   }
 
   // Update selected city time if it exists
@@ -231,6 +325,7 @@ function updateSelectedCity(event) {
   let dayNight = getDayNightIndicator(cityTime);
   let marketStatus = getMarketStatus(cityTime, cityName);
   let funReaction = getFunTimeReaction(cityTime);
+  let culturalGreeting = getCulturalGreeting(cityTime, cityName);
   let businessInfo = createBusinessInfo(cityName);
 
   const existingSelected = document.querySelector("#selected-city");
@@ -251,6 +346,7 @@ function updateSelectedCity(event) {
         <br><small style="font-size: 14px; color: #ff6b6b;">${funReaction}</small>
       </div>
       <div class="weather">Loading weather...</div>
+      <div class="cultural-greeting">${culturalGreeting}</div>
       ${businessInfo}
     </div>
   `;
@@ -279,8 +375,8 @@ document.addEventListener("DOMContentLoaded", function () {
 updateTime();
 fetchWeather("Nairobi", "nairobi");
 fetchWeather("Berlin", "berlin");
+initThemeToggle(); // Initialize theme toggle
 
 setInterval(updateTime, 1000);
 
 document.querySelector("#city").addEventListener("change", updateSelectedCity);
-

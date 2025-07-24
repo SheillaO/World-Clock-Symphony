@@ -1,12 +1,14 @@
 body {
-  background: linear-gradient(to right, #f9f7fe, #f0efff);
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9f7fe;
+  font-family: sans-serif;
   margin: 0;
   padding: 0;
+  transition: all 0.3s ease;
 }
 
 h1 {
   text-align: center;
+  font-family: sans-serif;
   font-size: 36px;
   margin-top: 30px;
   color: #333;
@@ -46,6 +48,32 @@ select:hover {
   z-index: 1;
 }
 
+/* Header with theme toggle */
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-size: 12px;
+  color: #666;
+  transition: all 0.2s ease;
+}
+
+.theme-toggle:hover {
+  background: #e8e8e8;
+}
+
 /* City cards - flex layout */
 .city,
 .city-card {
@@ -74,7 +102,6 @@ select:hover {
   font-size: 48px;
   font-weight: bold;
   color: #222;
-  animation: fadeIn 1s ease-in-out;
 }
 
 .time small {
@@ -101,6 +128,15 @@ select:hover {
   height: 40px;
 }
 
+/* Cultural greeting styles */
+.cultural-greeting {
+  font-size: 14px;
+  color: #666;
+  font-style: italic;
+  margin-top: 8px;
+  opacity: 0.8;
+}
+
 /* For selected city card, stack content vertically */
 #selected-city {
   flex-direction: column;
@@ -111,29 +147,88 @@ select:hover {
 /* Make sure selected city card's children are stacked properly */
 #selected-city .city-header,
 #selected-city .time,
-#selected-city .weather {
+#selected-city .weather,
+#selected-city .cultural-greeting {
   width: 100%;
   margin-bottom: 10px;
 }
 
 /* Footer styling */
 footer {
-  color: #666;
   text-align: center;
+  font-size: 18px;
+  color: rgba(0, 0, 0, 0.8);
   margin-top: 40px;
   padding: 10px;
 }
 
-/* Animation for time fade-in */
-@keyframes fadeIn {
-  from {
-    opacity: 0.5;
-    transform: scale(0.98);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+/* DARK THEME STYLES */
+body.dark-theme {
+  background-color: #1a1a2e;
+  color: #fff;
+}
+
+body.dark-theme .main-container {
+  background: #16213e;
+  color: #fff;
+}
+
+body.dark-theme h1,
+body.dark-theme h2 {
+  color: #fff;
+}
+
+body.dark-theme .date {
+  color: #bbb;
+}
+
+body.dark-theme .time {
+  color: #fff;
+}
+
+body.dark-theme .time small {
+  color: #ccc;
+}
+
+body.dark-theme select {
+  background: #16213e;
+  border: 1px solid #444;
+  color: #fff;
+}
+
+body.dark-theme select option {
+  background: #16213e;
+  color: #fff;
+}
+
+body.dark-theme .theme-toggle {
+  background: #2a2a3e;
+  border: 1px solid #444;
+  color: #ccc;
+}
+
+body.dark-theme .theme-toggle:hover {
+  background: #353550;
+}
+
+body.dark-theme .city-card {
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.2);
+}
+
+body.dark-theme .weather {
+  color: #ccc;
+}
+
+body.dark-theme .cultural-greeting {
+  color: #bbb;
+}
+
+body.dark-theme footer {
+  color: #bbb;
+}
+
+body.dark-theme footer a {
+  color: #87ceeb;
 }
 
 /* Responsive adjustments */
@@ -148,5 +243,10 @@ footer {
 
   h2 {
     font-size: 22px;
+  }
+
+  .header-content {
+    flex-direction: column;
+    gap: 15px;
   }
 }
