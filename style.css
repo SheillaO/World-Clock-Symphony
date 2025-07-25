@@ -414,6 +414,13 @@ body.dark-theme .meeting-planner-btn {
 }
 
 /*mobile look*/
+/* Default desktop layout */
+.city-card.static-card {
+  flex: 1 1 300px;
+  padding: 16px;
+  margin: 8px;
+  border-radius: 12px;
+}
 
 /* Mobile layout (up to 767px) */
 @media (max-width: 767px) {
