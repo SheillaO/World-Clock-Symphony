@@ -1,5 +1,5 @@
 // 🌍 Cultural greetings for different cities and times
-const culturalGreetings = {
+let culturalGreetings = {
   Nairobi: {
     morning: "Habari ya asubuhi! 🌅", // Good morning in Swahili
     afternoon: "Za mchana! ☀️", // Good afternoon
@@ -518,11 +518,5 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('meeting-mode-toggle').addEventListener('click', quickMeetingHelper);
 });
 
-/*mobile*/
 
-if (window.innerWidth <= 768) {
-  newCard.style.flexDirection = "column";
-  newCard.style.alignItems = "flex-start";
-  newCard.style.width = "100%";
-}
 
