@@ -519,4 +519,18 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
+function createCityCard(cityName, time, date, greeting, weatherInfo) {
+  const cityCard = document.createElement("div");
+  cityCard.classList.add("city-card");
+
+  cityCard.innerHTML = `
+    <h2>${cityName}</h2>
+    <p><strong>Time:</strong> ${time}</p>
+    <p><strong>Date:</strong> ${date}</p>
+    <p><strong>Greeting:</strong> ${greeting}</p>
+    <p><strong>Weather:</strong> ${weatherInfo}</p>
+  `;
+
+  document.querySelector(".container").appendChild(cityCard);
+}
 
