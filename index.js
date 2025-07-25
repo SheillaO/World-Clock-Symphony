@@ -1,19 +1,19 @@
 // 🌍 Cultural greetings for different cities and times
 const culturalGreetings = {
   Nairobi: {
-    morning: "Habari za asubuhi! 🌅", // Good morning in Swahili
-    afternoon: "Habari za mchana! ☀️", // Good afternoon
+    morning: "Habari ya asubuhi! 🌅", // Good morning in Swahili
+    afternoon: "Za mchana! ☀️", // Good afternoon
     evening: "Habari za jioni! 🌆", // Good evening
     night: "Usiku mwema! 🌙", // Good night
   },
   Berlin: {
     morning: "Guten Morgen! 🌅", // Good morning in German
-    afternoon: "Guten Tag! ☀️", // Good afternoon
+    afternoon: "Tag! ☀️", // Good afternoon
     evening: "Guten Abend! 🌆", // Good evening
     night: "Gute Nacht! 🌙", // Good night
   },
   "New York": {
-    morning: "Good morning! 🌅",
+    morning: "Top of the morning! 🌅",
     afternoon: "Good afternoon! ☀️",
     evening: "Good evening! 🌆",
     night: "Good night! 🌙",
@@ -25,7 +25,7 @@ const culturalGreetings = {
     night: "Good night! 🌙",
   },
   Tokyo: {
-    morning: "Ohayou gozaimasu! 🌅", // Good morning in Japanese
+    morning: "おはようございます! 🌅", // Good morning in Japanese
     afternoon: "Konnichiwa! ☀️", // Good afternoon
     evening: "Konbanwa! 🌆", // Good evening
     night: "Oyasumi! 🌙", // Good night
@@ -46,10 +46,10 @@ const culturalGreetings = {
 
 // 🎨 Theme toggle functionality
 function initThemeToggle() {
-  const themeToggle = document.getElementById("theme-toggle");
-  const body = document.body;
-  const themeIcon = document.querySelector(".theme-icon");
-  const themeText = document.querySelector(".theme-text");
+  let themeToggle = document.getElementById("theme-toggle");
+  let body = document.body;
+  let  themeIcon = document.querySelector(".theme-icon");
+  let  themeText = document.querySelector(".theme-text");
 
   themeToggle.addEventListener("click", () => {
     body.classList.toggle("dark-theme");
@@ -66,10 +66,10 @@ function initThemeToggle() {
 
 // 🗣️ Get cultural greeting based on time and city
 function getCulturalGreeting(momentTime, cityName) {
-  const greetings = culturalGreetings[cityName];
+  let greetings = culturalGreetings[cityName];
   if (!greetings) return "";
 
-  const hour = momentTime.hour();
+  let hour = momentTime.hour();
 
   if (hour >= 6 && hour < 12) {
     return greetings.morning;
@@ -81,7 +81,7 @@ function getCulturalGreeting(momentTime, cityName) {
     return greetings.night;
   }
 }
-const cityBusinessInfo = {
+let cityBusinessInfo = {
   Nairobi: {
     currency: "KSH (Kenyan Shilling)",
     marketHours: "9:00 AM - 3:00 PM",
@@ -128,7 +128,7 @@ const cityBusinessInfo = {
 
 // 🌅 Get day/night indicator based on time
 function getDayNightIndicator(momentTime) {
-  const hour = momentTime.hour();
+  let hour = momentTime.hour();
 
   if (hour >= 6 && hour < 12) {
     return "🌅 Morning";
@@ -143,8 +143,8 @@ function getDayNightIndicator(momentTime) {
 
 // 😊 Get fun emoji reaction based on time
 function getFunTimeReaction(momentTime) {
-  const hour = momentTime.hour();
-  const isWeekend = momentTime.day() === 0 || momentTime.day() === 6;
+  let hour = momentTime.hour();
+  let isWeekend = momentTime.day() === 0 || momentTime.day() === 6;
 
   if (hour >= 6 && hour < 8) {
     return "☕ Coffee time!";
@@ -176,13 +176,13 @@ function getFunTimeReaction(momentTime) {
 
 // 📈 Check if market is open (simple version)
 function getMarketStatus(momentTime, cityName) {
-  const hour = momentTime.hour();
-  const info = cityBusinessInfo[cityName];
+  let hour = momentTime.hour();
+  let info = cityBusinessInfo[cityName];
   if (!info) return "Market info unavailable";
 
   // Simple check - most markets open 9 AM - 4 PM weekdays
-  const isWeekday = momentTime.day() >= 1 && momentTime.day() <= 5;
-  const isMarketHours = hour >= 9 && hour <= 16;
+  let isWeekday = momentTime.day() >= 1 && momentTime.day() <= 5;
+  let isMarketHours = hour >= 9 && hour <= 16;
 
   if (isWeekday && isMarketHours) {
     return "🟢 Market Open";
@@ -193,7 +193,7 @@ function getMarketStatus(momentTime, cityName) {
 
 // 🏢 Create business info HTML
 function createBusinessInfo(cityName) {
-  const info = cityBusinessInfo[cityName];
+  let info = cityBusinessInfo[cityName];
   if (!info) return "";
 
   return `
@@ -209,19 +209,19 @@ function createBusinessInfo(cityName) {
 // 🕒 Update time for Nairobi and Berlin
 function updateTime() {
   // Nairobi
-  const nairobi = document.querySelector("#nairobi");
+  let nairobi = document.querySelector("#nairobi");
   if (nairobi) {
-    const nairobiDate = nairobi.querySelector(".date");
-    const nairobiTime = nairobi.querySelector(".time");
-    const nairobiGreeting = nairobi.querySelector(".cultural-greeting");
-    const time = moment().tz("Africa/Nairobi");
+    let nairobiDate = nairobi.querySelector(".date");
+    let nairobiTime = nairobi.querySelector(".time");
+    let nairobiGreeting = nairobi.querySelector(".cultural-greeting");
+    let time = moment().tz("Africa/Nairobi");
 
     nairobiDate.innerHTML = time.format("MMMM Do YYYY");
 
-    const dayNight = getDayNightIndicator(time);
-    const marketStatus = getMarketStatus(time, "Nairobi");
-    const funReaction = getFunTimeReaction(time);
-    const culturalGreeting = getCulturalGreeting(time, "Nairobi");
+    let dayNight = getDayNightIndicator(time);
+    let marketStatus = getMarketStatus(time, "Nairobi");
+    let funReaction = getFunTimeReaction(time);
+    let culturalGreeting = getCulturalGreeting(time, "Nairobi");
 
     nairobiTime.innerHTML = `
       ${time.format("h:mm:ss")} <small>${time.format("A")}</small>
@@ -236,19 +236,19 @@ function updateTime() {
   }
 
   // Berlin
-  const berlin = document.querySelector("#berlin");
+  let berlin = document.querySelector("#berlin");
   if (berlin) {
-    const berlinDate = berlin.querySelector(".date");
-    const berlinTime = berlin.querySelector(".time");
-    const berlinGreeting = berlin.querySelector(".cultural-greeting");
-    const time = moment().tz("Europe/Berlin");
+    let berlinDate = berlin.querySelector(".date");
+    let berlinTime = berlin.querySelector(".time");
+    let berlinGreeting = berlin.querySelector(".cultural-greeting");
+    let time = moment().tz("Europe/Berlin");
 
     berlinDate.innerHTML = time.format("MMMM Do YYYY");
 
-    const dayNight = getDayNightIndicator(time);
-    const marketStatus = getMarketStatus(time, "Berlin");
-    const funReaction = getFunTimeReaction(time);
-    const culturalGreeting = getCulturalGreeting(time, "Berlin");
+    let dayNight = getDayNightIndicator(time);
+    let marketStatus = getMarketStatus(time, "Berlin");
+    let funReaction = getFunTimeReaction(time);
+    let culturalGreeting = getCulturalGreeting(time, "Berlin");
 
     berlinTime.innerHTML = `
       ${time.format("h:mm:ss")} <small>${time.format("A")}</small>
@@ -263,18 +263,18 @@ function updateTime() {
   }
 
   // Update selected city time if it exists
-  const selectedCity = document.querySelector("#selected-city");
+  let selectedCity = document.querySelector("#selected-city");
   if (selectedCity && selectedCity.dataset.timezone) {
-    const selectedTime = selectedCity.querySelector(".time");
-    const selectedDate = selectedCity.querySelector(".date");
-    const cityName = selectedCity.dataset.cityname;
-    const time = moment().tz(selectedCity.dataset.timezone);
+    let selectedTime = selectedCity.querySelector(".time");
+    let selectedDate = selectedCity.querySelector(".date");
+    let cityName = selectedCity.dataset.cityname;
+    let time = moment().tz(selectedCity.dataset.timezone);
 
     selectedDate.innerHTML = time.format("MMMM Do YYYY");
 
-    const dayNight = getDayNightIndicator(time);
-    const marketStatus = getMarketStatus(time, cityName);
-    const funReaction = getFunTimeReaction(time);
+    let dayNight = getDayNightIndicator(time);
+    let marketStatus = getMarketStatus(time, cityName);
+    let funReaction = getFunTimeReaction(time);
 
     selectedTime.innerHTML = `
       ${time.format("h:mm:ss")} <small>${time.format("A")}</small>
@@ -287,13 +287,13 @@ function updateTime() {
 
 // ☁️ Fetch weather and update card by elementId
 function fetchWeather(cityName, elementId) {
-  const apiKey = "7601b0fff0179o9d5059a8db34ctbc66";
-  const url = `https://api.shecodes.io/weather/v1/current?query=${cityName}&key=${apiKey}&units=metric`;
+  let apiKey = "7601b0fff0179o9d5059a8db34ctbc66";
+  let url = `https://api.shecodes.io/weather/v1/current?query=${cityName}&key=${apiKey}&units=metric`;
 
   fetch(url)
     .then((res) => res.json())
     .then((data) => {
-      const weatherEl = document.querySelector(`#${elementId} .weather`);
+      let weatherEl = document.querySelector(`#${elementId} .weather`);
       if (weatherEl && data.condition) {
         weatherEl.innerHTML = `
           <img src="${data.condition.icon_url}" alt="${
@@ -306,7 +306,7 @@ function fetchWeather(cityName, elementId) {
       }
     })
     .catch(() => {
-      const weatherEl = document.querySelector(`#${elementId} .weather`);
+      let weatherEl = document.querySelector(`#${elementId} .weather`);
       if (weatherEl) weatherEl.innerText = "Weather unavailable";
     });
 }
@@ -328,13 +328,13 @@ function updateSelectedCity(event) {
   let culturalGreeting = getCulturalGreeting(cityTime, cityName);
   let businessInfo = createBusinessInfo(cityName);
 
-  const existingSelected = document.querySelector("#selected-city");
+  let existingSelected = document.querySelector("#selected-city");
   if (existingSelected) {
     existingSelected.remove();
   }
 
   // Use the SAME structure as Nairobi and Berlin
-  const newCityCard = `
+  let newCityCard = `
   <div class="city-card" id="selected-city" data-timezone="${cityTimeZone}" data-cityname="${cityName}">
     <div class="city-header">
       <h2>${cityName}</h2>
@@ -351,11 +351,11 @@ function updateSelectedCity(event) {
   </div>
 `;
 
-  const citiesElement = document.querySelector("#cities");
+  let citiesElement = document.querySelector("#cities");
   citiesElement.insertAdjacentHTML("beforeend", newCityCard);
 
   // Add business info after the greeting (same as Nairobi and Berlin)
-  const greeting = document.querySelector("#selected-city .cultural-greeting");
+  let greeting = document.querySelector("#selected-city .cultural-greeting");
   if (greeting && businessInfo) {
     greeting.insertAdjacentHTML("afterend", businessInfo);
   }
@@ -364,17 +364,17 @@ function updateSelectedCity(event) {
 }
 // Initial calls - Add business info to default cities
 document.addEventListener("DOMContentLoaded", function () {
-  const nairobiCard = document.querySelector("#nairobi");
+  let nairobiCard = document.querySelector("#nairobi");
   if (nairobiCard) {
-    const greeting = nairobiCard.querySelector(".cultural-greeting");
+    let greeting = nairobiCard.querySelector(".cultural-greeting");
     if (greeting) {
       greeting.insertAdjacentHTML("afterend", createBusinessInfo("Nairobi"));
     }
   }
 
-  const berlinCard = document.querySelector("#berlin");
+  let berlinCard = document.querySelector("#berlin");
   if (berlinCard) {
-    const greeting = berlinCard.querySelector(".cultural-greeting");
+    let greeting = berlinCard.querySelector(".cultural-greeting");
     if (greeting) {
       greeting.insertAdjacentHTML("afterend", createBusinessInfo("Berlin"));
     }
@@ -390,11 +390,11 @@ setInterval(updateTime, 1000);
 
 document.querySelector("#city").addEventListener("change", updateSelectedCity);
 
-const clientId = "7cf0f53647d34acd967f205ebb01c51c";
-const clientSecret = "cc1f3903f3214178abef218a5b027599";
+let clientId = "7cf0f53647d34acd967f205ebb01c51c";
+let clientSecret = "cc1f3903f3214178abef218a5b027599";
 
 async function getAccessToken() {
-  const result = await fetch("https://accounts.spotify.com/api/token", {
+  let result = await fetch("https://accounts.spotify.com/api/token", {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
@@ -403,14 +403,14 @@ async function getAccessToken() {
     body: "grant_type=client_credentials",
   });
 
-  const data = await result.json();
+  let data = await result.json();
   return data.access_token;
 }
 
 async function showTrack(query) {
-  const token = await getAccessToken();
+  let token = await getAccessToken();
 
-  const search = await fetch(
+  let search = await fetch(
     `https://api.spotify.com/v1/search?q=${encodeURIComponent(
       query
     )}&type=track&limit=1`,
@@ -421,11 +421,11 @@ async function showTrack(query) {
     }
   );
 
-  const data = await search.json();
-  const track = data.tracks.items[0];
+  let data = await search.json();
+  let track = data.tracks.items[0];
 
   if (track) {
-    const embed = `
+    let embed = `
       <iframe src="https://open.spotify.com/embed/track/${track.id}" 
               width="300" height="80" frameborder="0" 
               allowtransparency="true" allow="encrypted-media"></iframe>
@@ -434,19 +434,19 @@ async function showTrack(query) {
   }
 }
 
-const sautiSongs = [
+let sautiSongs = [
   "Sauti Sol Melanin",
   "Sauti Sol Suzanna",
   "Sauti Sol Midnight Train",
 ];
-const randomSong = sautiSongs[Math.floor(Math.random() * sautiSongs.length)];
+let randomSong = sautiSongs[Math.floor(Math.random() * sautiSongs.length)];
 showTrack(randomSong);
 
-const bird = document.querySelector(".flying-bird");
+let bird = document.querySelector(".flying-bird");
 
 function moveBird() {
-  const x = Math.random() * window.innerWidth;
-  const y = Math.random() * window.innerHeight;
+  let x = Math.random() * window.innerWidth;
+  let y = Math.random() * window.innerHeight;
   bird.style.transition = "transform 8s ease-in-out";
   bird.style.transform = `translate(${x}px, ${y}px)`;
 }
@@ -459,7 +459,7 @@ moveBird(); // Start immediately
 // Add this function
 // Meeting Planner Helper Function
 function quickMeetingHelper() {
-  const cities = document.querySelectorAll('.city-card h2');
+  let cities = document.querySelectorAll(".city-card h2");
   
   let suggestion = "🕐 Best meeting times (UTC):\n\n";
   
@@ -469,11 +469,11 @@ function quickMeetingHelper() {
     let cityDetails = [];
     
     cities.forEach((cityElement) => {
-      const cityName = cityElement.textContent;
-      const tz = getTimezoneFromCity(cityName);
+      let cityName = cityElement.textContent;
+      let tz = getTimezoneFromCity(cityName);
       if (tz) {
-        const cityTime = moment().utc().hour(hour).tz(tz);
-        const cityHour = cityTime.hour();
+        let cityTime = moment().utc().hour(hour).tz(tz);
+        let cityHour = cityTime.hour();
         
         if(cityHour >= 9 && cityHour <= 17) {
           businessHourCount++;
@@ -497,7 +497,7 @@ function quickMeetingHelper() {
 
 // Helper function to map city names to timezones
 function getTimezoneFromCity(cityName) {
-  const cityToTimezone = {
+  let cityToTimezone = {
     'Nairobi': 'Africa/Nairobi',
     'Berlin': 'Europe/Berlin', 
     'New York': 'America/New_York',
