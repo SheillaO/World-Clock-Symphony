@@ -517,3 +517,12 @@ document.addEventListener('DOMContentLoaded', function() {
   // ADD THIS LINE to your existing event listener
   document.getElementById('meeting-mode-toggle').addEventListener('click', quickMeetingHelper);
 });
+
+/*mobile*/
+
+if (window.innerWidth <= 768) {
+  newCard.style.flexDirection = "column";
+  newCard.style.alignItems = "flex-start";
+  newCard.style.width = "100%";
+}
+
