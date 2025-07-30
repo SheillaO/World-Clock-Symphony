@@ -390,8 +390,8 @@ setInterval(updateTime, 1000);
 
 document.querySelector("#city").addEventListener("change", updateSelectedCity);
 
-let clientId = "7cf0f53647d34acd967f205ebb01c51c";
-let clientSecret = "cc1f3903f3214178abef218a5b027599";
+let clientId = "your_client_id";
+let clientSecret = "your_client_secret";
 
 async function getAccessToken() {
   let result = await fetch("https://accounts.spotify.com/api/token", {
